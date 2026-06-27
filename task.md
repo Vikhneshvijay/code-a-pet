@@ -55,8 +55,10 @@ Save these in your project's `assets/` folder.
 - `[ ]` **`icon_hunger.svg`** — Hunger icon (drumstick/stomach).
 - `[ ]` **`icon_happiness.svg`** — Happiness icon (heart/smiley).
 - `[ ]` **`icon_energy.svg`** — Energy icon (lightning bolt).
-- `[ ]` **`ui_stat_bar_empty.svg`** — Stat bar empty container.
-- `[ ]` **`ui_stat_bar_full.svg`** — Stat bar fill segments.
+- `[ ]` **`ui_stat_bar_full.svg`** — Bar at 75–100% (green fill).
+- `[ ]` **`ui_stat_bar_medium.svg`** — Bar at 40–74% (yellow fill).
+- `[ ]` **`ui_stat_bar_low.svg`** — Bar at 15–39% (orange fill).
+- `[ ]` **`ui_stat_bar_critical.svg`** — Bar at 0–14% (red sliver).
 
 ### Interactive Props
 - `[ ]` **`prop_space_food.svg`** — Alien food (space fruit).

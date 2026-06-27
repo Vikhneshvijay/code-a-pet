@@ -69,7 +69,7 @@ The Pet sprite must continuously evaluate its current variables to reflect its m
 ### 3.5 Custom HUD & Stat Bars
 Rather than showing default Scratch variable readouts, the project uses a custom graphic HUD:
 *   **Stats Display:** Each stat (Hunger, Happiness, Energy) is represented by a small SVG icon (drumstick, heart, lightning bolt) and a corresponding visual progress bar.
-*   **Stat Bar Logic:** The stat bars are sprites with multiple costumes (e.g., 10 frames representing 10% increments from empty to full). As a variable changes, the bar sprite divides the variable value by 10 and rounds it to switch to the correct costume frame (e.g., `Hunger = 75` $\rightarrow$ switch to costume 8).
+*   **Stat Bar Logic:** Each stat bar is a sprite with **4 costumes** representing distinct health states: `bar_full` (green, 75–100%), `bar_medium` (yellow, 40–74%), `bar_low` (orange, 15–39%), and `bar_critical` (red, 0–14%). As a variable changes, the code uses an `if/else if` chain to switch to the correct costume (e.g., `Hunger = 75` $\rightarrow$ switch to `bar_full`).
 
 ### 3.6 Glide-to-Pet Interactive Props
 Clicking action buttons triggers a dynamic physical interaction using dedicated prop sprites:
@@ -323,8 +323,10 @@ These assets compose the custom visual Heads-Up Display for the stats.
 | **Hunger Icon** | `icon_hunger` | `icon_hunger.svg` | A little meat drumstick, food bowl, or stomach icon. |
 | **Happiness Icon**| `icon_happiness`| `icon_happiness.svg` | A red heart or grinning emoji icon. |
 | **Energy Icon** | `icon_energy` | `icon_energy.svg` | A yellow lightning bolt or battery icon. |
-| **Stat Bar empty**| `bar_empty` | `ui_stat_bar_empty.svg`| Gray/transparent container frame for the bar. |
-| **Stat Bar fill** | `bar_fill_X` | `ui_stat_bar_full.svg` | Red, Green, or Blue horizontal fills. Used as a costume set with varying lengths. |
+| **Stat Bar Full** | `bar_full` | `ui_stat_bar_full.svg` | Green `#4CAF50` fill at 100% width. Pet is healthy (75–100%). |
+| **Stat Bar Medium**| `bar_medium`| `ui_stat_bar_medium.svg`| Yellow `#FFD700` fill at ~60% width. Needs attention (40–74%). |
+| **Stat Bar Low** | `bar_low` | `ui_stat_bar_low.svg` | Orange `#FF9800` fill at ~30% width. Getting urgent (15–39%). |
+| **Stat Bar Critical**| `bar_critical`| `ui_stat_bar_critical.svg`| Red `#FF4444` fill at ~10% width. Dangerously low (0–14%). |
 
 ### 7.4 Interactive Prop Sprites
 Physical items spawned and animated on button click.
