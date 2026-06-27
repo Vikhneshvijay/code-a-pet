@@ -1,0 +1,18 @@
+# Scratch Build Outputs
+*.sb3
+output.sb3
+
+# Python Cache & Virtual Environments
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+env/
+ENV/
+
+# VS Code Environment & OS files
+.vscode/
+.DS_Store
+Thumbs.db
+*.log
