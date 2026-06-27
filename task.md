@@ -83,26 +83,26 @@ Save these in your project's `assets/` folder.
 Sound effects for interactions and state changes.
 
 ### Alien Sounds
-- `[ ]` **`sound_alien_munch.wav`** (or `.mp3`) — Sci-fi chew sound.
-- `[ ]` **`sound_alien_boing.wav`** (or `.mp3`) — Space spring bounce sound.
-- `[ ]` **`sound_alien_snore.wav`** (or `.mp3`) — Bubbly space snore.
-- `[ ]` **`sound_alien_hello.wav`** (or `.mp3`) — Sci-fi greeting sound when chosen.
+- `[x]` **`sound_alien_munch.wav`** (or `.mp3`) — Sci-fi chew sound.
+- `[x]` **`sound_alien_boing.wav`** (or `.mp3`) — Space spring bounce sound.
+- `[x]` **`sound_alien_snore.wav`** (or `.mp3`) — Bubbly space snore.
+- `[x]` **`sound_alien_hello.wav`** (or `.mp3`) — Sci-fi greeting sound when chosen.
 
 ### Puppy Sounds
-- `[ ]` **`sound_puppy_munch.wav`** (or `.mp3`) — Crunching/chewing sound.
-- `[ ]` **`sound_puppy_boing.wav`** (or `.mp3`) — Squeaky toy sound.
-- `[ ]` **`sound_puppy_snore.wav`** (or `.mp3`) — Gentle puppy breathing.
-- `[ ]` **`sound_puppy_hello.wav`** (or `.mp3`) — Happy greeting bark when chosen.
+- `[x]` **`sound_puppy_munch.wav`** (or `.mp3`) — Crunching/chewing sound.
+- `[x]` **`sound_puppy_boing.wav`** (or `.mp3`) — Squeaky toy sound.
+- `[x]` **`sound_puppy_snore.wav`** (or `.mp3`) — Gentle puppy breathing.
+- `[x]` **`sound_puppy_hello.wav`** (or `.mp3`) — Happy greeting bark when chosen.
 
 ### Robo-Kitten Sounds
-- `[ ]` **`sound_kitten_munch.wav`** (or `.mp3`) — Electric/oil slurping sound.
-- `[ ]` **`sound_kitten_boing.wav`** (or `.mp3`) — Synth bounce/beep-boop sound.
-- `[ ]` **`sound_kitten_snore.wav`** (or `.mp3`) — Standby hum/fan whirring.
-- `[ ]` **`sound_kitten_hello.wav`** (or `.mp3`) — Power boot-up/meow sound when chosen.
+- `[x]` **`sound_kitten_munch.wav`** (or `.mp3`) — Electric/oil slurping sound.
+- `[x]` **`sound_kitten_boing.wav`** (or `.mp3`) — Synth bounce/beep-boop sound.
+- `[x]` **`sound_kitten_snore.wav`** (or `.mp3`) — Standby hum/fan whirring.
+- `[x]` **`sound_kitten_hello.wav`** (or `.mp3`) — Power boot-up/meow sound when chosen.
 
 ### Shared Sounds
-- `[ ]` **`sound_warning.wav`** (or `.mp3`) — Low stat alert sound.
-- `[ ]` **`sound_gameover.wav`** (or `.mp3`) — Sad retro game-over melody.
+- `[x]` **`sound_warning.wav`** (or `.mp3`) — Low stat alert sound.
+- `[x]` **`sound_gameover.wav`** (or `.mp3`) — Sad retro game-over melody.
 
 ## 3. Project Configuration & Code Tasks
 These will be executed once the assets are in place.
