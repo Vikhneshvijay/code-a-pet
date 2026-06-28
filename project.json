@@ -1,0 +1,7380 @@
+{
+  "targets": [
+    {
+      "isStage": true,
+      "name": "Stage",
+      "variables": {
+        "var_hunger": [
+          "Hunger",
+          100
+        ],
+        "var_happiness": [
+          "Happiness",
+          100
+        ],
+        "var_energy": [
+          "Energy",
+          100
+        ],
+        "var_pettype": [
+          "PetType",
+          ""
+        ],
+        "var_gamestate": [
+          "GameState",
+          "title"
+        ],
+        "var_issleeping": [
+          "IsSleeping",
+          0
+        ]
+      },
+      "lists": {},
+      "broadcasts": {
+        "broadcast_start_game": "start_game",
+        "broadcast_game_over": "game_over",
+        "broadcast_feed": "feed",
+        "broadcast_play": "play",
+        "broadcast_sleep": "sleep",
+        "broadcast_vfx_hearts": "vfx_hearts",
+        "broadcast_vfx_zzz": "vfx_zzz",
+        "broadcast_vfx_alert": "vfx_alert",
+        "broadcast_show_select_screen": "show_select_screen"
+      },
+      "blocks": {
+        "stage_flag_1": {
+          "opcode": "event_whenflagclicked",
+          "next": "stage_set_state_2",
+          "parent": null,
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": true,
+          "x": 100,
+          "y": 100
+        },
+        "stage_set_state_2": {
+          "opcode": "data_setvariableto",
+          "next": "stage_switch_backdrop_3",
+          "parent": "stage_flag_1",
+          "inputs": {
+            "VALUE": [
+              1,
+              [
+                10,
+                "title"
+              ]
+            ]
+          },
+          "fields": {
+            "VARIABLE": [
+              "GameState",
+              "var_gamestate"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "stage_switch_backdrop_3": {
+          "opcode": "looks_switchbackdropto",
+          "next": null,
+          "parent": "stage_set_state_2",
+          "inputs": {
+            "BACKDROP": [
+              1,
+              [
+                10,
+                "screen_title"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "stage_recv_gameover_4": {
+          "opcode": "event_whenbroadcastreceived",
+          "next": "stage_set_state_go_5",
+          "parent": null,
+          "inputs": {},
+          "fields": {
+            "BROADCAST_OPTION": [
+              "game_over",
+              "broadcast_game_over"
+            ]
+          },
+          "shadow": false,
+          "topLevel": true,
+          "x": 100,
+          "y": 300
+        },
+        "stage_set_state_go_5": {
+          "opcode": "data_setvariableto",
+          "next": "stage_switch_go_6",
+          "parent": "stage_recv_gameover_4",
+          "inputs": {
+            "VALUE": [
+              1,
+              [
+                10,
+                "gameover"
+              ]
+            ]
+          },
+          "fields": {
+            "VARIABLE": [
+              "GameState",
+              "var_gamestate"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "stage_switch_go_6": {
+          "opcode": "looks_switchbackdropto",
+          "next": "stage_play_go_7",
+          "parent": "stage_set_state_go_5",
+          "inputs": {
+            "BACKDROP": [
+              1,
+              [
+                10,
+                "screen_gameover"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "stage_play_go_7": {
+          "opcode": "sound_play",
+          "next": null,
+          "parent": "stage_switch_go_6",
+          "inputs": {
+            "SOUND_MENU": [
+              1,
+              [
+                10,
+                "sound_gameover"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "fix_stage_click_1": {
+          "opcode": "event_whenstageclicked",
+          "next": "fix_stage_if_go_1",
+          "parent": null,
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": true,
+          "x": 400,
+          "y": 100
+        },
+        "fix_stage_if_go_1": {
+          "opcode": "control_if",
+          "next": null,
+          "parent": "fix_stage_click_1",
+          "inputs": {
+            "CONDITION": [
+              2,
+              "fix_stage_eq_go_1"
+            ],
+            "SUBSTACK": [
+              2,
+              "fix_stage_set_gs_1"
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "fix_stage_eq_go_1": {
+          "opcode": "operator_equals",
+          "next": null,
+          "parent": "fix_stage_if_go_1",
+          "inputs": {
+            "OPERAND1": [
+              3,
+              "fix_stage_read_gs_1",
+              [
+                10,
+                ""
+              ]
+            ],
+            "OPERAND2": [
+              1,
+              [
+                10,
+                "gameover"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "fix_stage_read_gs_1": {
+          "opcode": "data_variable",
+          "next": null,
+          "parent": "fix_stage_eq_go_1",
+          "inputs": {},
+          "fields": {
+            "VARIABLE": [
+              "GameState",
+              "var_gamestate"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "fix_stage_set_gs_1": {
+          "opcode": "data_setvariableto",
+          "next": "fix_stage_set_h_1",
+          "parent": "fix_stage_if_go_1",
+          "inputs": {
+            "VALUE": [
+              1,
+              [
+                10,
+                "select"
+              ]
+            ]
+          },
+          "fields": {
+            "VARIABLE": [
+              "GameState",
+              "var_gamestate"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "fix_stage_set_h_1": {
+          "opcode": "data_setvariableto",
+          "next": "fix_stage_set_hp_1",
+          "parent": "fix_stage_set_gs_1",
+          "inputs": {
+            "VALUE": [
+              1,
+              [
+                4,
+                "100"
+              ]
+            ]
+          },
+          "fields": {
+            "VARIABLE": [
+              "Hunger",
+              "var_hunger"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "fix_stage_set_hp_1": {
+          "opcode": "data_setvariableto",
+          "next": "fix_stage_set_e_1",
+          "parent": "fix_stage_set_h_1",
+          "inputs": {
+            "VALUE": [
+              1,
+              [
+                4,
+                "100"
+              ]
+            ]
+          },
+          "fields": {
+            "VARIABLE": [
+              "Happiness",
+              "var_happiness"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "fix_stage_set_e_1": {
+          "opcode": "data_setvariableto",
+          "next": "fix_stage_broadcast_select_1",
+          "parent": "fix_stage_set_hp_1",
+          "inputs": {
+            "VALUE": [
+              1,
+              [
+                4,
+                "100"
+              ]
+            ]
+          },
+          "fields": {
+            "VARIABLE": [
+              "Energy",
+              "var_energy"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "fix_stage_broadcast_select_1": {
+          "opcode": "event_broadcast",
+          "next": null,
+          "parent": "fix_stage_set_e_1",
+          "inputs": {
+            "BROADCAST_INPUT": [
+              1,
+              [
+                11,
+                "show_select_screen",
+                "broadcast_show_select_screen"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "fix_stage_recv_select_1": {
+          "opcode": "event_whenbroadcastreceived",
+          "next": "fix_stage_switch_title_1",
+          "parent": null,
+          "inputs": {},
+          "fields": {
+            "BROADCAST_OPTION": [
+              "show_select_screen",
+              "broadcast_show_select_screen"
+            ]
+          },
+          "shadow": false,
+          "topLevel": true,
+          "x": 400,
+          "y": 300
+        },
+        "fix_stage_switch_title_1": {
+          "opcode": "looks_switchbackdropto",
+          "next": null,
+          "parent": "fix_stage_recv_select_1",
+          "inputs": {
+            "BACKDROP": [
+              1,
+              [
+                10,
+                "screen_title"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        }
+      },
+      "comments": {},
+      "currentCostume": 0,
+      "costumes": [
+        {
+          "assetId": "screen_title",
+          "name": "screen_title",
+          "md5ext": "screen_title.png",
+          "dataFormat": "png",
+          "rotationCenterX": 240,
+          "rotationCenterY": 180
+        },
+        {
+          "assetId": "screen_gameover",
+          "name": "screen_gameover",
+          "md5ext": "screen_gameover.png",
+          "dataFormat": "png",
+          "rotationCenterX": 240,
+          "rotationCenterY": 180
+        },
+        {
+          "assetId": "bg_alien_day",
+          "name": "bg_alien_day",
+          "md5ext": "bg_alien_day.png",
+          "dataFormat": "png",
+          "rotationCenterX": 240,
+          "rotationCenterY": 180
+        },
+        {
+          "assetId": "bg_alien_night",
+          "name": "bg_alien_night",
+          "md5ext": "bg_alien_night.png",
+          "dataFormat": "png",
+          "rotationCenterX": 240,
+          "rotationCenterY": 180
+        },
+        {
+          "assetId": "bg_puppy_day",
+          "name": "bg_puppy_day",
+          "md5ext": "bg_puppy_day.png",
+          "dataFormat": "png",
+          "rotationCenterX": 240,
+          "rotationCenterY": 180
+        },
+        {
+          "assetId": "bg_puppy_night",
+          "name": "bg_puppy_night",
+          "md5ext": "bg_puppy_night.png",
+          "dataFormat": "png",
+          "rotationCenterX": 240,
+          "rotationCenterY": 180
+        },
+        {
+          "assetId": "bg_robo_day",
+          "name": "bg_robo_day",
+          "md5ext": "bg_robo_day.png",
+          "dataFormat": "png",
+          "rotationCenterX": 240,
+          "rotationCenterY": 180
+        },
+        {
+          "assetId": "bg_robo_night",
+          "name": "bg_robo_night",
+          "md5ext": "bg_robo_night.png",
+          "dataFormat": "png",
+          "rotationCenterX": 240,
+          "rotationCenterY": 180
+        }
+      ],
+      "sounds": [
+        {
+          "assetId": "sound_warning",
+          "name": "sound_warning",
+          "md5ext": "sound_warning.wav",
+          "dataFormat": "wav",
+          "format": "",
+          "rate": 44100,
+          "sampleCount": 44100
+        },
+        {
+          "assetId": "sound_gameover",
+          "name": "sound_gameover",
+          "md5ext": "sound_gameover.wav",
+          "dataFormat": "wav",
+          "format": "",
+          "rate": 44100,
+          "sampleCount": 44100
+        }
+      ],
+      "volume": 100,
+      "layerOrder": 0,
+      "tempo": 60,
+      "videoTransparency": 50,
+      "videoState": "on",
+      "textToSpeechLanguage": null
+    },
+    {
+      "isStage": false,
+      "name": "StartButton",
+      "variables": {},
+      "lists": {},
+      "broadcasts": {},
+      "blocks": {
+        "sb_flag_9": {
+          "opcode": "event_whenflagclicked",
+          "next": "sb_hide_10",
+          "parent": null,
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": true,
+          "x": 100,
+          "y": 100
+        },
+        "sb_hide_10": {
+          "opcode": "looks_hide",
+          "next": "sb_ghost_17",
+          "parent": "sb_flag_9",
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "sb_click_11": {
+          "opcode": "event_whenthisspriteclicked",
+          "next": "sb_if_12",
+          "parent": null,
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": true,
+          "x": 100,
+          "y": 250
+        },
+        "sb_if_12": {
+          "opcode": "control_if",
+          "next": null,
+          "parent": "sb_click_11",
+          "inputs": {
+            "CONDITION": [
+              2,
+              "sb_eq_15"
+            ],
+            "SUBSTACK": [
+              2,
+              "sb_set_state_13"
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "sb_eq_15": {
+          "opcode": "operator_equals",
+          "next": null,
+          "parent": "sb_if_12",
+          "inputs": {
+            "OPERAND1": [
+              3,
+              "sb_read_state_16",
+              [
+                10,
+                ""
+              ]
+            ],
+            "OPERAND2": [
+              1,
+              [
+                10,
+                "title"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "sb_read_state_16": {
+          "opcode": "data_variable",
+          "next": null,
+          "parent": "sb_eq_15",
+          "inputs": {},
+          "fields": {
+            "VARIABLE": [
+              "GameState",
+              "var_gamestate"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "sb_set_state_13": {
+          "opcode": "data_setvariableto",
+          "next": "sb_broadcast_14",
+          "parent": "sb_if_12",
+          "inputs": {
+            "VALUE": [
+              1,
+              [
+                10,
+                "select"
+              ]
+            ]
+          },
+          "fields": {
+            "VARIABLE": [
+              "GameState",
+              "var_gamestate"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "sb_broadcast_14": {
+          "opcode": "event_broadcast",
+          "next": null,
+          "parent": "sb_set_state_13",
+          "inputs": {
+            "BROADCAST_INPUT": [
+              1,
+              [
+                11,
+                "show_select_screen",
+                "broadcast_show_select_screen"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "sb_ghost_17": {
+          "opcode": "looks_seteffectto",
+          "next": null,
+          "parent": "sb_hide_10",
+          "inputs": {
+            "VALUE": [
+              1,
+              [
+                4,
+                "100"
+              ]
+            ]
+          },
+          "fields": {
+            "EFFECT": [
+              "GHOST"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        }
+      },
+      "comments": {},
+      "currentCostume": 0,
+      "costumes": [
+        {
+          "assetId": "button_start_area",
+          "name": "button_start_area",
+          "md5ext": "icon_energy.png",
+          "dataFormat": "png",
+          "rotationCenterX": 16,
+          "rotationCenterY": 16
+        }
+      ],
+      "sounds": [],
+      "volume": 100,
+      "layerOrder": 1,
+      "visible": true,
+      "x": 0,
+      "y": -80,
+      "size": 300,
+      "direction": 90,
+      "draggable": false,
+      "rotationStyle": "all around"
+    },
+    {
+      "isStage": false,
+      "name": "SelectBloopButton",
+      "variables": {},
+      "lists": {},
+      "broadcasts": {},
+      "blocks": {
+        "sel_Bloop_flag_18": {
+          "opcode": "event_whenflagclicked",
+          "next": "sel_Bloop_hide_19",
+          "parent": null,
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": true,
+          "x": 100,
+          "y": 100
+        },
+        "sel_Bloop_hide_19": {
+          "opcode": "looks_hide",
+          "next": null,
+          "parent": "sel_Bloop_flag_18",
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "sel_Bloop_recv_20": {
+          "opcode": "event_whenbroadcastreceived",
+          "next": "sel_Bloop_goto_21",
+          "parent": null,
+          "inputs": {},
+          "fields": {
+            "BROADCAST_OPTION": [
+              "show_select_screen",
+              "broadcast_show_select_screen"
+            ]
+          },
+          "shadow": false,
+          "topLevel": true,
+          "x": 100,
+          "y": 200
+        },
+        "sel_Bloop_goto_21": {
+          "opcode": "motion_gotoxy",
+          "next": "sel_Bloop_show_22",
+          "parent": "sel_Bloop_recv_20",
+          "inputs": {
+            "X": [
+              1,
+              [
+                4,
+                "-140"
+              ]
+            ],
+            "Y": [
+              1,
+              [
+                4,
+                "-20"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "sel_Bloop_show_22": {
+          "opcode": "looks_show",
+          "next": null,
+          "parent": "sel_Bloop_goto_21",
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "sel_Bloop_click_23": {
+          "opcode": "event_whenthisspriteclicked",
+          "next": "sel_Bloop_set_type_24",
+          "parent": null,
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": true,
+          "x": 100,
+          "y": 350
+        },
+        "sel_Bloop_set_type_24": {
+          "opcode": "data_setvariableto",
+          "next": "sel_Bloop_set_state_25",
+          "parent": "sel_Bloop_click_23",
+          "inputs": {
+            "VALUE": [
+              1,
+              [
+                10,
+                "Bloop"
+              ]
+            ]
+          },
+          "fields": {
+            "VARIABLE": [
+              "PetType",
+              "var_pettype"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "sel_Bloop_set_state_25": {
+          "opcode": "data_setvariableto",
+          "next": "sel_Bloop_hide_all_26",
+          "parent": "sel_Bloop_set_type_24",
+          "inputs": {
+            "VALUE": [
+              1,
+              [
+                10,
+                "playing"
+              ]
+            ]
+          },
+          "fields": {
+            "VARIABLE": [
+              "GameState",
+              "var_gamestate"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "sel_Bloop_hide_all_26": {
+          "opcode": "looks_hide",
+          "next": "sel_Bloop_broadcast_27",
+          "parent": "sel_Bloop_set_state_25",
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "sel_Bloop_broadcast_27": {
+          "opcode": "event_broadcast",
+          "next": null,
+          "parent": "sel_Bloop_hide_all_26",
+          "inputs": {
+            "BROADCAST_INPUT": [
+              1,
+              [
+                11,
+                "start_game",
+                "broadcast_start_game"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "sel_Bloop_recv_start_28": {
+          "opcode": "event_whenbroadcastreceived",
+          "next": "sel_Bloop_hide_start_29",
+          "parent": null,
+          "inputs": {},
+          "fields": {
+            "BROADCAST_OPTION": [
+              "start_game",
+              "broadcast_start_game"
+            ]
+          },
+          "shadow": false,
+          "topLevel": true,
+          "x": 100,
+          "y": 550
+        },
+        "sel_Bloop_hide_start_29": {
+          "opcode": "looks_hide",
+          "next": null,
+          "parent": "sel_Bloop_recv_start_28",
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        }
+      },
+      "comments": {},
+      "currentCostume": 0,
+      "costumes": [
+        {
+          "assetId": "button_select_bloop",
+          "name": "button_select_bloop",
+          "md5ext": "button_select_alien.png",
+          "dataFormat": "png",
+          "rotationCenterX": 60,
+          "rotationCenterY": 70
+        }
+      ],
+      "sounds": [],
+      "volume": 100,
+      "layerOrder": 2,
+      "visible": false,
+      "x": -140,
+      "y": -20,
+      "size": 100,
+      "direction": 90,
+      "draggable": false,
+      "rotationStyle": "all around"
+    },
+    {
+      "isStage": false,
+      "name": "SelectWafflesButton",
+      "variables": {},
+      "lists": {},
+      "broadcasts": {},
+      "blocks": {
+        "sel_Waffles_flag_30": {
+          "opcode": "event_whenflagclicked",
+          "next": "sel_Waffles_hide_31",
+          "parent": null,
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": true,
+          "x": 100,
+          "y": 100
+        },
+        "sel_Waffles_hide_31": {
+          "opcode": "looks_hide",
+          "next": null,
+          "parent": "sel_Waffles_flag_30",
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "sel_Waffles_recv_32": {
+          "opcode": "event_whenbroadcastreceived",
+          "next": "sel_Waffles_goto_33",
+          "parent": null,
+          "inputs": {},
+          "fields": {
+            "BROADCAST_OPTION": [
+              "show_select_screen",
+              "broadcast_show_select_screen"
+            ]
+          },
+          "shadow": false,
+          "topLevel": true,
+          "x": 100,
+          "y": 200
+        },
+        "sel_Waffles_goto_33": {
+          "opcode": "motion_gotoxy",
+          "next": "sel_Waffles_show_34",
+          "parent": "sel_Waffles_recv_32",
+          "inputs": {
+            "X": [
+              1,
+              [
+                4,
+                "0"
+              ]
+            ],
+            "Y": [
+              1,
+              [
+                4,
+                "-20"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "sel_Waffles_show_34": {
+          "opcode": "looks_show",
+          "next": null,
+          "parent": "sel_Waffles_goto_33",
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "sel_Waffles_click_35": {
+          "opcode": "event_whenthisspriteclicked",
+          "next": "sel_Waffles_set_type_36",
+          "parent": null,
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": true,
+          "x": 100,
+          "y": 350
+        },
+        "sel_Waffles_set_type_36": {
+          "opcode": "data_setvariableto",
+          "next": "sel_Waffles_set_state_37",
+          "parent": "sel_Waffles_click_35",
+          "inputs": {
+            "VALUE": [
+              1,
+              [
+                10,
+                "Waffles"
+              ]
+            ]
+          },
+          "fields": {
+            "VARIABLE": [
+              "PetType",
+              "var_pettype"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "sel_Waffles_set_state_37": {
+          "opcode": "data_setvariableto",
+          "next": "sel_Waffles_hide_all_38",
+          "parent": "sel_Waffles_set_type_36",
+          "inputs": {
+            "VALUE": [
+              1,
+              [
+                10,
+                "playing"
+              ]
+            ]
+          },
+          "fields": {
+            "VARIABLE": [
+              "GameState",
+              "var_gamestate"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "sel_Waffles_hide_all_38": {
+          "opcode": "looks_hide",
+          "next": "sel_Waffles_broadcast_39",
+          "parent": "sel_Waffles_set_state_37",
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "sel_Waffles_broadcast_39": {
+          "opcode": "event_broadcast",
+          "next": null,
+          "parent": "sel_Waffles_hide_all_38",
+          "inputs": {
+            "BROADCAST_INPUT": [
+              1,
+              [
+                11,
+                "start_game",
+                "broadcast_start_game"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "sel_Waffles_recv_start_40": {
+          "opcode": "event_whenbroadcastreceived",
+          "next": "sel_Waffles_hide_start_41",
+          "parent": null,
+          "inputs": {},
+          "fields": {
+            "BROADCAST_OPTION": [
+              "start_game",
+              "broadcast_start_game"
+            ]
+          },
+          "shadow": false,
+          "topLevel": true,
+          "x": 100,
+          "y": 550
+        },
+        "sel_Waffles_hide_start_41": {
+          "opcode": "looks_hide",
+          "next": null,
+          "parent": "sel_Waffles_recv_start_40",
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        }
+      },
+      "comments": {},
+      "currentCostume": 0,
+      "costumes": [
+        {
+          "assetId": "button_select_waffles",
+          "name": "button_select_waffles",
+          "md5ext": "button_select_puppy.png",
+          "dataFormat": "png",
+          "rotationCenterX": 60,
+          "rotationCenterY": 70
+        }
+      ],
+      "sounds": [],
+      "volume": 100,
+      "layerOrder": 3,
+      "visible": false,
+      "x": 0,
+      "y": -20,
+      "size": 100,
+      "direction": 90,
+      "draggable": false,
+      "rotationStyle": "all around"
+    },
+    {
+      "isStage": false,
+      "name": "SelectGizmoButton",
+      "variables": {},
+      "lists": {},
+      "broadcasts": {},
+      "blocks": {
+        "sel_Gizmo_flag_42": {
+          "opcode": "event_whenflagclicked",
+          "next": "sel_Gizmo_hide_43",
+          "parent": null,
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": true,
+          "x": 100,
+          "y": 100
+        },
+        "sel_Gizmo_hide_43": {
+          "opcode": "looks_hide",
+          "next": null,
+          "parent": "sel_Gizmo_flag_42",
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "sel_Gizmo_recv_44": {
+          "opcode": "event_whenbroadcastreceived",
+          "next": "sel_Gizmo_goto_45",
+          "parent": null,
+          "inputs": {},
+          "fields": {
+            "BROADCAST_OPTION": [
+              "show_select_screen",
+              "broadcast_show_select_screen"
+            ]
+          },
+          "shadow": false,
+          "topLevel": true,
+          "x": 100,
+          "y": 200
+        },
+        "sel_Gizmo_goto_45": {
+          "opcode": "motion_gotoxy",
+          "next": "sel_Gizmo_show_46",
+          "parent": "sel_Gizmo_recv_44",
+          "inputs": {
+            "X": [
+              1,
+              [
+                4,
+                "140"
+              ]
+            ],
+            "Y": [
+              1,
+              [
+                4,
+                "-20"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "sel_Gizmo_show_46": {
+          "opcode": "looks_show",
+          "next": null,
+          "parent": "sel_Gizmo_goto_45",
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "sel_Gizmo_click_47": {
+          "opcode": "event_whenthisspriteclicked",
+          "next": "sel_Gizmo_set_type_48",
+          "parent": null,
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": true,
+          "x": 100,
+          "y": 350
+        },
+        "sel_Gizmo_set_type_48": {
+          "opcode": "data_setvariableto",
+          "next": "sel_Gizmo_set_state_49",
+          "parent": "sel_Gizmo_click_47",
+          "inputs": {
+            "VALUE": [
+              1,
+              [
+                10,
+                "Gizmo"
+              ]
+            ]
+          },
+          "fields": {
+            "VARIABLE": [
+              "PetType",
+              "var_pettype"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "sel_Gizmo_set_state_49": {
+          "opcode": "data_setvariableto",
+          "next": "sel_Gizmo_hide_all_50",
+          "parent": "sel_Gizmo_set_type_48",
+          "inputs": {
+            "VALUE": [
+              1,
+              [
+                10,
+                "playing"
+              ]
+            ]
+          },
+          "fields": {
+            "VARIABLE": [
+              "GameState",
+              "var_gamestate"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "sel_Gizmo_hide_all_50": {
+          "opcode": "looks_hide",
+          "next": "sel_Gizmo_broadcast_51",
+          "parent": "sel_Gizmo_set_state_49",
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "sel_Gizmo_broadcast_51": {
+          "opcode": "event_broadcast",
+          "next": null,
+          "parent": "sel_Gizmo_hide_all_50",
+          "inputs": {
+            "BROADCAST_INPUT": [
+              1,
+              [
+                11,
+                "start_game",
+                "broadcast_start_game"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "sel_Gizmo_recv_start_52": {
+          "opcode": "event_whenbroadcastreceived",
+          "next": "sel_Gizmo_hide_start_53",
+          "parent": null,
+          "inputs": {},
+          "fields": {
+            "BROADCAST_OPTION": [
+              "start_game",
+              "broadcast_start_game"
+            ]
+          },
+          "shadow": false,
+          "topLevel": true,
+          "x": 100,
+          "y": 550
+        },
+        "sel_Gizmo_hide_start_53": {
+          "opcode": "looks_hide",
+          "next": null,
+          "parent": "sel_Gizmo_recv_start_52",
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        }
+      },
+      "comments": {},
+      "currentCostume": 0,
+      "costumes": [
+        {
+          "assetId": "button_select_gizmo",
+          "name": "button_select_gizmo",
+          "md5ext": "button_select_kitten.png",
+          "dataFormat": "png",
+          "rotationCenterX": 60,
+          "rotationCenterY": 70
+        }
+      ],
+      "sounds": [],
+      "volume": 100,
+      "layerOrder": 4,
+      "visible": false,
+      "x": 140,
+      "y": -20,
+      "size": 100,
+      "direction": 90,
+      "draggable": false,
+      "rotationStyle": "all around"
+    },
+    {
+      "isStage": false,
+      "name": "Pet",
+      "variables": {
+        "var_state": [
+          "State",
+          "normal"
+        ],
+        "var_frame": [
+          "Frame",
+          "1"
+        ]
+      },
+      "lists": {},
+      "broadcasts": {},
+      "blocks": {
+        "pet_flag_54": {
+          "opcode": "event_whenflagclicked",
+          "next": "pet_hide_55",
+          "parent": null,
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": true,
+          "x": 100,
+          "y": 50
+        },
+        "pet_hide_55": {
+          "opcode": "looks_hide",
+          "next": null,
+          "parent": "pet_flag_54",
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "pet_recv_56": {
+          "opcode": "event_whenbroadcastreceived",
+          "next": "pet_init_h_57",
+          "parent": null,
+          "inputs": {},
+          "fields": {
+            "BROADCAST_OPTION": [
+              "start_game",
+              "broadcast_start_game"
+            ]
+          },
+          "shadow": false,
+          "topLevel": true,
+          "x": 100,
+          "y": 150
+        },
+        "pet_init_h_57": {
+          "opcode": "data_setvariableto",
+          "next": "pet_init_hp_58",
+          "parent": "pet_recv_56",
+          "inputs": {
+            "VALUE": [
+              1,
+              [
+                4,
+                "100"
+              ]
+            ]
+          },
+          "fields": {
+            "VARIABLE": [
+              "Hunger",
+              "var_hunger"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "pet_init_hp_58": {
+          "opcode": "data_setvariableto",
+          "next": "pet_init_e_59",
+          "parent": "pet_init_h_57",
+          "inputs": {
+            "VALUE": [
+              1,
+              [
+                4,
+                "100"
+              ]
+            ]
+          },
+          "fields": {
+            "VARIABLE": [
+              "Happiness",
+              "var_happiness"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "pet_init_e_59": {
+          "opcode": "data_setvariableto",
+          "next": "pet_init_s_60",
+          "parent": "pet_init_hp_58",
+          "inputs": {
+            "VALUE": [
+              1,
+              [
+                4,
+                "100"
+              ]
+            ]
+          },
+          "fields": {
+            "VARIABLE": [
+              "Energy",
+              "var_energy"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "pet_init_s_60": {
+          "opcode": "data_setvariableto",
+          "next": "pet_goto_61",
+          "parent": "pet_init_e_59",
+          "inputs": {
+            "VALUE": [
+              1,
+              [
+                4,
+                "0"
+              ]
+            ]
+          },
+          "fields": {
+            "VARIABLE": [
+              "IsSleeping",
+              "var_issleeping"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "pet_goto_61": {
+          "opcode": "motion_gotoxy",
+          "next": "pet_show_62",
+          "parent": "pet_init_s_60",
+          "inputs": {
+            "X": [
+              1,
+              [
+                4,
+                "0"
+              ]
+            ],
+            "Y": [
+              1,
+              [
+                4,
+                "-20"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "pet_show_62": {
+          "opcode": "looks_show",
+          "next": "pet_size_63",
+          "parent": "pet_goto_61",
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "pet_size_63": {
+          "opcode": "looks_setsizeto",
+          "next": "pet_hello_64",
+          "parent": "pet_show_62",
+          "inputs": {
+            "SIZE": [
+              1,
+              [
+                4,
+                "100"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "pet_hello_64": "hello_if_alien_65",
+        "hello_if_alien_65": {
+          "opcode": "control_if_else",
+          "next": null,
+          "parent": "pet_size_63",
+          "inputs": {
+            "CONDITION": [
+              2,
+              "hello_eq_alien_66"
+            ],
+            "SUBSTACK": [
+              2,
+              "hello_play_alien_67"
+            ],
+            "SUBSTACK2": [
+              2,
+              "hello_if_puppy_68"
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "hello_eq_alien_66": {
+          "opcode": "operator_equals",
+          "next": null,
+          "parent": "hello_if_alien_65",
+          "inputs": {
+            "OPERAND1": [
+              3,
+              "hello_read_type_1_72",
+              [
+                10,
+                ""
+              ]
+            ],
+            "OPERAND2": [
+              1,
+              [
+                10,
+                "Bloop"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "hello_read_type_1_72": {
+          "opcode": "data_variable",
+          "next": null,
+          "parent": "hello_eq_alien_66",
+          "inputs": {},
+          "fields": {
+            "VARIABLE": [
+              "PetType",
+              "var_pettype"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "hello_play_alien_67": {
+          "opcode": "sound_play",
+          "next": null,
+          "parent": "hello_if_alien_65",
+          "inputs": {
+            "SOUND_MENU": [
+              1,
+              [
+                10,
+                "sound_alien_hello"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "hello_if_puppy_68": {
+          "opcode": "control_if_else",
+          "next": null,
+          "parent": "hello_if_alien_65",
+          "inputs": {
+            "CONDITION": [
+              2,
+              "hello_eq_puppy_69"
+            ],
+            "SUBSTACK": [
+              2,
+              "hello_play_puppy_70"
+            ],
+            "SUBSTACK2": [
+              2,
+              "hello_play_kitten_71"
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "hello_eq_puppy_69": {
+          "opcode": "operator_equals",
+          "next": null,
+          "parent": "hello_if_puppy_68",
+          "inputs": {
+            "OPERAND1": [
+              3,
+              "hello_read_type_2_73",
+              [
+                10,
+                ""
+              ]
+            ],
+            "OPERAND2": [
+              1,
+              [
+                10,
+                "Waffles"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "hello_read_type_2_73": {
+          "opcode": "data_variable",
+          "next": null,
+          "parent": "hello_eq_puppy_69",
+          "inputs": {},
+          "fields": {
+            "VARIABLE": [
+              "PetType",
+              "var_pettype"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "hello_play_puppy_70": {
+          "opcode": "sound_play",
+          "next": null,
+          "parent": "hello_if_puppy_68",
+          "inputs": {
+            "SOUND_MENU": [
+              1,
+              [
+                10,
+                "sound_puppy_hello"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "hello_play_kitten_71": {
+          "opcode": "sound_play",
+          "next": null,
+          "parent": "hello_if_puppy_68",
+          "inputs": {
+            "SOUND_MENU": [
+              1,
+              [
+                10,
+                "sound_kitten_hello"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "decay_recv_74": {
+          "opcode": "event_whenbroadcastreceived",
+          "next": "decay_forever_75",
+          "parent": null,
+          "inputs": {},
+          "fields": {
+            "BROADCAST_OPTION": [
+              "start_game",
+              "broadcast_start_game"
+            ]
+          },
+          "shadow": false,
+          "topLevel": true,
+          "x": 400,
+          "y": 150
+        },
+        "decay_forever_75": {
+          "opcode": "control_forever",
+          "next": null,
+          "parent": "decay_recv_74",
+          "inputs": {
+            "SUBSTACK": [
+              2,
+              "decay_wait_76"
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "decay_wait_76": {
+          "opcode": "control_wait",
+          "next": "decay_dec_h_77",
+          "parent": "decay_forever_75",
+          "inputs": {
+            "DURATION": [
+              1,
+              [
+                5,
+                "1.5"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "decay_dec_h_77": {
+          "opcode": "data_changevariableby",
+          "next": "decay_dec_hp_78",
+          "parent": "decay_wait_76",
+          "inputs": {
+            "VALUE": [
+              1,
+              [
+                4,
+                "-2"
+              ]
+            ]
+          },
+          "fields": {
+            "VARIABLE": [
+              "Hunger",
+              "var_hunger"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "decay_dec_hp_78": {
+          "opcode": "data_changevariableby",
+          "next": "decay_dec_e_79",
+          "parent": "decay_dec_h_77",
+          "inputs": {
+            "VALUE": [
+              1,
+              [
+                4,
+                "-1"
+              ]
+            ]
+          },
+          "fields": {
+            "VARIABLE": [
+              "Happiness",
+              "var_happiness"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "decay_dec_e_79": "decay_if_sleep_80",
+        "decay_if_sleep_80": {
+          "opcode": "control_if_else",
+          "next": null,
+          "parent": "decay_dec_hp_78",
+          "inputs": {
+            "CONDITION": [
+              2,
+              "decay_eq_sleep_81"
+            ],
+            "SUBSTACK": [
+              2,
+              "decay_inc_e_82"
+            ],
+            "SUBSTACK2": [
+              2,
+              "decay_dec_e_real_83"
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "decay_eq_sleep_81": {
+          "opcode": "operator_equals",
+          "next": null,
+          "parent": "decay_if_sleep_80",
+          "inputs": {
+            "OPERAND1": [
+              3,
+              "decay_read_sleep_84",
+              [
+                10,
+                ""
+              ]
+            ],
+            "OPERAND2": [
+              1,
+              [
+                10,
+                "1"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "decay_read_sleep_84": {
+          "opcode": "data_variable",
+          "next": null,
+          "parent": "decay_eq_sleep_81",
+          "inputs": {},
+          "fields": {
+            "VARIABLE": [
+              "IsSleeping",
+              "var_issleeping"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "decay_inc_e_82": {
+          "opcode": "data_changevariableby",
+          "next": null,
+          "parent": "decay_if_sleep_80",
+          "inputs": {
+            "VALUE": [
+              1,
+              [
+                4,
+                "5"
+              ]
+            ]
+          },
+          "fields": {
+            "VARIABLE": [
+              "Energy",
+              "var_energy"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "decay_dec_e_real_83": {
+          "opcode": "data_changevariableby",
+          "next": null,
+          "parent": "decay_if_sleep_80",
+          "inputs": {
+            "VALUE": [
+              1,
+              [
+                4,
+                "-1.5"
+              ]
+            ]
+          },
+          "fields": {
+            "VARIABLE": [
+              "Energy",
+              "var_energy"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "state_recv_85": {
+          "opcode": "event_whenbroadcastreceived",
+          "next": "state_forever_86",
+          "parent": null,
+          "inputs": {},
+          "fields": {
+            "BROADCAST_OPTION": [
+              "start_game",
+              "broadcast_start_game"
+            ]
+          },
+          "shadow": false,
+          "topLevel": true,
+          "x": 750,
+          "y": 150
+        },
+        "state_forever_86": {
+          "opcode": "control_forever",
+          "next": null,
+          "parent": "state_recv_85",
+          "inputs": {
+            "SUBSTACK": [
+              2,
+              "state_check_ghost_87"
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "state_check_ghost_87": {
+          "opcode": "control_if_else",
+          "next": null,
+          "parent": "state_forever_86",
+          "inputs": {
+            "CONDITION": [
+              2,
+              "fix_outer_or_1"
+            ],
+            "SUBSTACK": [
+              2,
+              "state_set_ghost_91"
+            ],
+            "SUBSTACK2": [
+              2,
+              "state_check_sleep_94"
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "state_or_ghost_88": {
+          "opcode": "operator_or",
+          "next": null,
+          "parent": "fix_outer_or_1",
+          "inputs": {
+            "OPERAND1": [
+              2,
+              "state_lt_h_89"
+            ],
+            "OPERAND2": [
+              2,
+              "state_lt_hp_90"
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "state_lt_h_89": {
+          "opcode": "operator_lt",
+          "next": null,
+          "parent": "state_or_ghost_88",
+          "inputs": {
+            "OPERAND1": [
+              3,
+              "state_read_h_95",
+              [
+                10,
+                ""
+              ]
+            ],
+            "OPERAND2": [
+              1,
+              [
+                10,
+                "1"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "state_read_h_95": {
+          "opcode": "data_variable",
+          "next": null,
+          "parent": "state_lt_h_89",
+          "inputs": {},
+          "fields": {
+            "VARIABLE": [
+              "Hunger",
+              "var_hunger"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "state_lt_hp_90": {
+          "opcode": "operator_lt",
+          "next": null,
+          "parent": "state_or_ghost_88",
+          "inputs": {
+            "OPERAND1": [
+              3,
+              "state_read_hp_96",
+              [
+                10,
+                ""
+              ]
+            ],
+            "OPERAND2": [
+              1,
+              [
+                10,
+                "1"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "state_read_hp_96": {
+          "opcode": "data_variable",
+          "next": null,
+          "parent": "state_lt_hp_90",
+          "inputs": {},
+          "fields": {
+            "VARIABLE": [
+              "Happiness",
+              "var_happiness"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "state_set_ghost_91": {
+          "opcode": "data_setvariableto",
+          "next": "state_broadcast_go_92",
+          "parent": "state_check_ghost_87",
+          "inputs": {
+            "VALUE": [
+              1,
+              [
+                10,
+                "ghost"
+              ]
+            ]
+          },
+          "fields": {
+            "VARIABLE": [
+              "State",
+              "var_state"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "state_broadcast_go_92": {
+          "opcode": "event_broadcast",
+          "next": "fix_pet_hide_go_1",
+          "parent": "state_set_ghost_91",
+          "inputs": {
+            "BROADCAST_INPUT": [
+              1,
+              [
+                11,
+                "game_over",
+                "broadcast_game_over"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "state_stop_others_93": {
+          "opcode": "control_stop",
+          "next": null,
+          "parent": "fix_pet_hide_go_1",
+          "inputs": {},
+          "fields": {
+            "STOP_OPTION": [
+              "other scripts in sprite"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false,
+          "mutation": {
+            "tagName": "mutation",
+            "children": [],
+            "hasnext": true
+          }
+        },
+        "state_check_sleep_94": {
+          "opcode": "control_if_else",
+          "next": null,
+          "parent": "state_check_ghost_87",
+          "inputs": {
+            "CONDITION": [
+              2,
+              "state_eq_sleep_97"
+            ],
+            "SUBSTACK": [
+              2,
+              "state_set_sleep_98"
+            ],
+            "SUBSTACK2": [
+              2,
+              "state_check_sad_99"
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "state_eq_sleep_97": {
+          "opcode": "operator_equals",
+          "next": null,
+          "parent": "state_check_sleep_94",
+          "inputs": {
+            "OPERAND1": [
+              3,
+              "state_read_sleep_2_100",
+              [
+                10,
+                ""
+              ]
+            ],
+            "OPERAND2": [
+              1,
+              [
+                10,
+                "1"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "state_read_sleep_2_100": {
+          "opcode": "data_variable",
+          "next": null,
+          "parent": "state_eq_sleep_97",
+          "inputs": {},
+          "fields": {
+            "VARIABLE": [
+              "IsSleeping",
+              "var_issleeping"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "state_set_sleep_98": {
+          "opcode": "data_setvariableto",
+          "next": null,
+          "parent": "state_check_sleep_94",
+          "inputs": {
+            "VALUE": [
+              1,
+              [
+                10,
+                "sleeping"
+              ]
+            ]
+          },
+          "fields": {
+            "VARIABLE": [
+              "State",
+              "var_state"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "state_check_sad_99": {
+          "opcode": "control_if_else",
+          "next": null,
+          "parent": "state_check_sleep_94",
+          "inputs": {
+            "CONDITION": [
+              2,
+              "state_or_sad_101"
+            ],
+            "SUBSTACK": [
+              2,
+              "state_set_sad_104"
+            ],
+            "SUBSTACK2": [
+              2,
+              "state_check_eating_105"
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "state_or_sad_101": {
+          "opcode": "operator_or",
+          "next": null,
+          "parent": "state_check_sad_99",
+          "inputs": {
+            "OPERAND1": [
+              2,
+              "state_lt_h2_102"
+            ],
+            "OPERAND2": [
+              2,
+              "state_lt_hp2_103"
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "state_lt_h2_102": {
+          "opcode": "operator_lt",
+          "next": null,
+          "parent": "state_or_sad_101",
+          "inputs": {
+            "OPERAND1": [
+              3,
+              "state_read_h_2_106",
+              [
+                10,
+                ""
+              ]
+            ],
+            "OPERAND2": [
+              1,
+              [
+                10,
+                "20"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "state_read_h_2_106": {
+          "opcode": "data_variable",
+          "next": null,
+          "parent": "state_lt_h2_102",
+          "inputs": {},
+          "fields": {
+            "VARIABLE": [
+              "Hunger",
+              "var_hunger"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "state_lt_hp2_103": {
+          "opcode": "operator_lt",
+          "next": null,
+          "parent": "state_or_sad_101",
+          "inputs": {
+            "OPERAND1": [
+              3,
+              "state_read_hp_2_107",
+              [
+                10,
+                ""
+              ]
+            ],
+            "OPERAND2": [
+              1,
+              [
+                10,
+                "20"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "state_read_hp_2_107": {
+          "opcode": "data_variable",
+          "next": null,
+          "parent": "state_lt_hp2_103",
+          "inputs": {},
+          "fields": {
+            "VARIABLE": [
+              "Happiness",
+              "var_happiness"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "state_set_sad_104": {
+          "opcode": "data_setvariableto",
+          "next": null,
+          "parent": "state_check_sad_99",
+          "inputs": {
+            "VALUE": [
+              1,
+              [
+                10,
+                "sad"
+              ]
+            ]
+          },
+          "fields": {
+            "VARIABLE": [
+              "State",
+              "var_state"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "state_check_eating_105": {
+          "opcode": "control_if_else",
+          "next": null,
+          "parent": "state_check_sad_99",
+          "inputs": {
+            "CONDITION": [
+              2,
+              "state_eq_eating_108"
+            ],
+            "SUBSTACK": [
+              2,
+              null
+            ],
+            "SUBSTACK2": [
+              2,
+              "state_set_normal_109"
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "state_eq_eating_108": {
+          "opcode": "operator_equals",
+          "next": null,
+          "parent": "state_check_eating_105",
+          "inputs": {
+            "OPERAND1": [
+              3,
+              "state_read_state_eating_110",
+              [
+                10,
+                ""
+              ]
+            ],
+            "OPERAND2": [
+              1,
+              [
+                10,
+                "eating"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "state_read_state_eating_110": {
+          "opcode": "data_variable",
+          "next": null,
+          "parent": "state_eq_eating_108",
+          "inputs": {},
+          "fields": {
+            "VARIABLE": [
+              "State",
+              "var_state"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "state_set_normal_109": {
+          "opcode": "data_setvariableto",
+          "next": null,
+          "parent": "state_check_eating_105",
+          "inputs": {
+            "VALUE": [
+              1,
+              [
+                10,
+                "normal"
+              ]
+            ]
+          },
+          "fields": {
+            "VARIABLE": [
+              "State",
+              "var_state"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "costume_recv_111": {
+          "opcode": "event_whenbroadcastreceived",
+          "next": "costume_forever_112",
+          "parent": null,
+          "inputs": {},
+          "fields": {
+            "BROADCAST_OPTION": [
+              "start_game",
+              "broadcast_start_game"
+            ]
+          },
+          "shadow": false,
+          "topLevel": true,
+          "x": 1050,
+          "y": 150
+        },
+        "costume_forever_112": {
+          "opcode": "control_forever",
+          "next": null,
+          "parent": "costume_recv_111",
+          "inputs": {
+            "SUBSTACK": [
+              2,
+              "costume_set_f1_115"
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "costume_set_f1_115": {
+          "opcode": "data_setvariableto",
+          "next": "costume_switch_113",
+          "parent": "costume_forever_112",
+          "inputs": {
+            "VALUE": [
+              1,
+              [
+                10,
+                "1"
+              ]
+            ]
+          },
+          "fields": {
+            "VARIABLE": [
+              "Frame",
+              "var_frame"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "costume_switch_113": {
+          "opcode": "looks_switchcostumeto",
+          "next": "costume_wait_114",
+          "parent": "costume_set_f1_115",
+          "inputs": {
+            "COSTUME": [
+              1,
+              "join_costume1_119"
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "join_costume1_119": {
+          "opcode": "operator_join",
+          "next": null,
+          "parent": "costume_switch_113",
+          "inputs": {
+            "STRING1": [
+              3,
+              "join_pt1_120",
+              [
+                10,
+                ""
+              ]
+            ],
+            "STRING2": [
+              3,
+              "join_s1_121",
+              [
+                10,
+                ""
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "join_pt1_120": {
+          "opcode": "data_variable",
+          "next": null,
+          "parent": "join_costume1_119",
+          "inputs": {},
+          "fields": {
+            "VARIABLE": [
+              "PetType",
+              "var_pettype"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "join_s1_121": {
+          "opcode": "operator_join",
+          "next": null,
+          "parent": "join_costume1_119",
+          "inputs": {
+            "STRING1": [
+              1,
+              [
+                10,
+                "_"
+              ]
+            ],
+            "STRING2": [
+              3,
+              "join_s2_122",
+              [
+                10,
+                ""
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "join_s2_122": {
+          "opcode": "operator_join",
+          "next": null,
+          "parent": "join_s1_121",
+          "inputs": {
+            "STRING1": [
+              3,
+              "join_st1_123",
+              [
+                10,
+                ""
+              ]
+            ],
+            "STRING2": [
+              1,
+              [
+                10,
+                "_f1"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "join_st1_123": {
+          "opcode": "data_variable",
+          "next": null,
+          "parent": "join_s2_122",
+          "inputs": {},
+          "fields": {
+            "VARIABLE": [
+              "State",
+              "var_state"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "costume_wait_114": {
+          "opcode": "control_wait",
+          "next": "costume_set_f2_118",
+          "parent": "costume_switch_113",
+          "inputs": {
+            "DURATION": [
+              1,
+              [
+                5,
+                "0.5"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "costume_set_f2_118": {
+          "opcode": "data_setvariableto",
+          "next": "costume_switch2_116",
+          "parent": "costume_wait_114",
+          "inputs": {
+            "VALUE": [
+              1,
+              [
+                10,
+                "2"
+              ]
+            ]
+          },
+          "fields": {
+            "VARIABLE": [
+              "Frame",
+              "var_frame"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "costume_switch2_116": {
+          "opcode": "looks_switchcostumeto",
+          "next": "costume_wait2_117",
+          "parent": "costume_set_f2_118",
+          "inputs": {
+            "COSTUME": [
+              1,
+              "join_costume2_124"
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "join_costume2_124": {
+          "opcode": "operator_join",
+          "next": null,
+          "parent": "costume_switch2_116",
+          "inputs": {
+            "STRING1": [
+              3,
+              "join_pt2_125",
+              [
+                10,
+                ""
+              ]
+            ],
+            "STRING2": [
+              3,
+              "join_s3_126",
+              [
+                10,
+                ""
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "join_pt2_125": {
+          "opcode": "data_variable",
+          "next": null,
+          "parent": "join_costume2_124",
+          "inputs": {},
+          "fields": {
+            "VARIABLE": [
+              "PetType",
+              "var_pettype"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "join_s3_126": {
+          "opcode": "operator_join",
+          "next": null,
+          "parent": "join_costume2_124",
+          "inputs": {
+            "STRING1": [
+              1,
+              [
+                10,
+                "_"
+              ]
+            ],
+            "STRING2": [
+              3,
+              "join_s4_127",
+              [
+                10,
+                ""
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "join_s4_127": {
+          "opcode": "operator_join",
+          "next": null,
+          "parent": "join_s3_126",
+          "inputs": {
+            "STRING1": [
+              3,
+              "join_st2_128",
+              [
+                10,
+                ""
+              ]
+            ],
+            "STRING2": [
+              1,
+              [
+                10,
+                "_f2"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "join_st2_128": {
+          "opcode": "data_variable",
+          "next": null,
+          "parent": "join_s4_127",
+          "inputs": {},
+          "fields": {
+            "VARIABLE": [
+              "State",
+              "var_state"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "costume_wait2_117": {
+          "opcode": "control_wait",
+          "next": null,
+          "parent": "costume_switch2_116",
+          "inputs": {
+            "DURATION": [
+              1,
+              [
+                5,
+                "0.5"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "feed_recv_129": {
+          "opcode": "event_whenbroadcastreceived",
+          "next": "feed_set_eat_130",
+          "parent": null,
+          "inputs": {},
+          "fields": {
+            "BROADCAST_OPTION": [
+              "feed",
+              "broadcast_feed"
+            ]
+          },
+          "shadow": false,
+          "topLevel": true,
+          "x": 100,
+          "y": 700
+        },
+        "feed_set_eat_130": {
+          "opcode": "data_setvariableto",
+          "next": "feed_sound_131",
+          "parent": "feed_recv_129",
+          "inputs": {
+            "VALUE": [
+              1,
+              [
+                10,
+                "eating"
+              ]
+            ]
+          },
+          "fields": {
+            "VARIABLE": [
+              "State",
+              "var_state"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "feed_sound_131": "feed_sound_if_alien_135",
+        "feed_sound_if_alien_135": {
+          "opcode": "control_if_else",
+          "next": "feed_wait_132",
+          "parent": "feed_set_eat_130",
+          "inputs": {
+            "CONDITION": [
+              2,
+              "feed_eq_alien_136"
+            ],
+            "SUBSTACK": [
+              2,
+              "feed_play_alien_137"
+            ],
+            "SUBSTACK2": [
+              2,
+              "feed_sound_if_puppy_138"
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "feed_eq_alien_136": {
+          "opcode": "operator_equals",
+          "next": null,
+          "parent": "feed_sound_if_alien_135",
+          "inputs": {
+            "OPERAND1": [
+              3,
+              "feed_read_type1_142",
+              [
+                10,
+                ""
+              ]
+            ],
+            "OPERAND2": [
+              1,
+              [
+                10,
+                "Bloop"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "feed_read_type1_142": {
+          "opcode": "data_variable",
+          "next": null,
+          "parent": "feed_eq_alien_136",
+          "inputs": {},
+          "fields": {
+            "VARIABLE": [
+              "PetType",
+              "var_pettype"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "feed_play_alien_137": {
+          "opcode": "sound_play",
+          "next": null,
+          "parent": "feed_sound_if_alien_135",
+          "inputs": {
+            "SOUND_MENU": [
+              1,
+              [
+                10,
+                "sound_alien_munch"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "feed_sound_if_puppy_138": {
+          "opcode": "control_if_else",
+          "next": null,
+          "parent": "feed_sound_if_alien_135",
+          "inputs": {
+            "CONDITION": [
+              2,
+              "feed_eq_puppy_139"
+            ],
+            "SUBSTACK": [
+              2,
+              "feed_play_puppy_140"
+            ],
+            "SUBSTACK2": [
+              2,
+              "feed_play_kitten_141"
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "feed_eq_puppy_139": {
+          "opcode": "operator_equals",
+          "next": null,
+          "parent": "feed_sound_if_puppy_138",
+          "inputs": {
+            "OPERAND1": [
+              3,
+              "feed_read_type2_143",
+              [
+                10,
+                ""
+              ]
+            ],
+            "OPERAND2": [
+              1,
+              [
+                10,
+                "Waffles"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "feed_read_type2_143": {
+          "opcode": "data_variable",
+          "next": null,
+          "parent": "feed_eq_puppy_139",
+          "inputs": {},
+          "fields": {
+            "VARIABLE": [
+              "PetType",
+              "var_pettype"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "feed_play_puppy_140": {
+          "opcode": "sound_play",
+          "next": null,
+          "parent": "feed_sound_if_puppy_138",
+          "inputs": {
+            "SOUND_MENU": [
+              1,
+              [
+                10,
+                "sound_puppy_munch"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "feed_play_kitten_141": {
+          "opcode": "sound_play",
+          "next": null,
+          "parent": "feed_sound_if_puppy_138",
+          "inputs": {
+            "SOUND_MENU": [
+              1,
+              [
+                10,
+                "sound_kitten_munch"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "feed_wait_132": {
+          "opcode": "control_wait",
+          "next": "feed_inc_133",
+          "parent": "feed_sound_if_alien_135",
+          "inputs": {
+            "DURATION": [
+              1,
+              [
+                5,
+                "1.0"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "feed_inc_133": {
+          "opcode": "data_changevariableby",
+          "next": "feed_cap_134",
+          "parent": "feed_wait_132",
+          "inputs": {
+            "VALUE": [
+              1,
+              [
+                4,
+                "15"
+              ]
+            ]
+          },
+          "fields": {
+            "VARIABLE": [
+              "Hunger",
+              "var_hunger"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "feed_cap_134": {
+          "opcode": "control_if",
+          "next": "feed_set_normal_145",
+          "parent": "feed_inc_133",
+          "inputs": {
+            "CONDITION": [
+              2,
+              "feed_gt_100_144"
+            ],
+            "SUBSTACK": [
+              2,
+              "feed_set_100_146"
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "feed_gt_100_144": {
+          "opcode": "operator_gt",
+          "next": null,
+          "parent": "feed_cap_134",
+          "inputs": {
+            "OPERAND1": [
+              3,
+              "feed_read_h_cap_147",
+              [
+                10,
+                ""
+              ]
+            ],
+            "OPERAND2": [
+              1,
+              [
+                10,
+                "100"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "feed_read_h_cap_147": {
+          "opcode": "data_variable",
+          "next": null,
+          "parent": "feed_gt_100_144",
+          "inputs": {},
+          "fields": {
+            "VARIABLE": [
+              "Hunger",
+              "var_hunger"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "feed_set_100_146": {
+          "opcode": "data_setvariableto",
+          "next": null,
+          "parent": "feed_cap_134",
+          "inputs": {
+            "VALUE": [
+              1,
+              [
+                4,
+                "100"
+              ]
+            ]
+          },
+          "fields": {
+            "VARIABLE": [
+              "Hunger",
+              "var_hunger"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "feed_set_normal_145": {
+          "opcode": "data_setvariableto",
+          "next": null,
+          "parent": "feed_cap_134",
+          "inputs": {
+            "VALUE": [
+              1,
+              [
+                10,
+                "normal"
+              ]
+            ]
+          },
+          "fields": {
+            "VARIABLE": [
+              "State",
+              "var_state"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "play_recv_148": {
+          "opcode": "event_whenbroadcastreceived",
+          "next": "play_sound_149",
+          "parent": null,
+          "inputs": {},
+          "fields": {
+            "BROADCAST_OPTION": [
+              "play",
+              "broadcast_play"
+            ]
+          },
+          "shadow": false,
+          "topLevel": true,
+          "x": 450,
+          "y": 700
+        },
+        "play_sound_149": "play_sound_if_alien_153",
+        "play_sound_if_alien_153": {
+          "opcode": "control_if_else",
+          "next": "play_bounce_150",
+          "parent": "play_recv_148",
+          "inputs": {
+            "CONDITION": [
+              2,
+              "play_eq_alien_154"
+            ],
+            "SUBSTACK": [
+              2,
+              "play_play_alien_155"
+            ],
+            "SUBSTACK2": [
+              2,
+              "play_sound_if_puppy_156"
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "play_eq_alien_154": {
+          "opcode": "operator_equals",
+          "next": null,
+          "parent": "play_sound_if_alien_153",
+          "inputs": {
+            "OPERAND1": [
+              3,
+              "play_read_type1_160",
+              [
+                10,
+                ""
+              ]
+            ],
+            "OPERAND2": [
+              1,
+              [
+                10,
+                "Bloop"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "play_read_type1_160": {
+          "opcode": "data_variable",
+          "next": null,
+          "parent": "play_eq_alien_154",
+          "inputs": {},
+          "fields": {
+            "VARIABLE": [
+              "PetType",
+              "var_pettype"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "play_play_alien_155": {
+          "opcode": "sound_play",
+          "next": null,
+          "parent": "play_sound_if_alien_153",
+          "inputs": {
+            "SOUND_MENU": [
+              1,
+              [
+                10,
+                "sound_alien_boing"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "play_sound_if_puppy_156": {
+          "opcode": "control_if_else",
+          "next": null,
+          "parent": "play_sound_if_alien_153",
+          "inputs": {
+            "CONDITION": [
+              2,
+              "play_eq_puppy_157"
+            ],
+            "SUBSTACK": [
+              2,
+              "play_play_puppy_158"
+            ],
+            "SUBSTACK2": [
+              2,
+              "play_play_kitten_159"
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "play_eq_puppy_157": {
+          "opcode": "operator_equals",
+          "next": null,
+          "parent": "play_sound_if_puppy_156",
+          "inputs": {
+            "OPERAND1": [
+              3,
+              "play_read_type2_161",
+              [
+                10,
+                ""
+              ]
+            ],
+            "OPERAND2": [
+              1,
+              [
+                10,
+                "Waffles"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "play_read_type2_161": {
+          "opcode": "data_variable",
+          "next": null,
+          "parent": "play_eq_puppy_157",
+          "inputs": {},
+          "fields": {
+            "VARIABLE": [
+              "PetType",
+              "var_pettype"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "play_play_puppy_158": {
+          "opcode": "sound_play",
+          "next": null,
+          "parent": "play_sound_if_puppy_156",
+          "inputs": {
+            "SOUND_MENU": [
+              1,
+              [
+                10,
+                "sound_puppy_boing"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "play_play_kitten_159": {
+          "opcode": "sound_play",
+          "next": null,
+          "parent": "play_sound_if_puppy_156",
+          "inputs": {
+            "SOUND_MENU": [
+              1,
+              [
+                10,
+                "sound_kitten_boing"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "play_bounce_150": "bounce_rep_162",
+        "bounce_rep_162": {
+          "opcode": "control_repeat",
+          "next": "play_inc_151",
+          "parent": "play_sound_if_alien_153",
+          "inputs": {
+            "TIMES": [
+              1,
+              [
+                6,
+                "4"
+              ]
+            ],
+            "SUBSTACK": [
+              2,
+              "bounce_up_163"
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "bounce_up_163": {
+          "opcode": "motion_changeyby",
+          "next": "bounce_wait_164",
+          "parent": "bounce_rep_162",
+          "inputs": {
+            "DY": [
+              1,
+              [
+                4,
+                "15"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "bounce_wait_164": {
+          "opcode": "control_wait",
+          "next": "bounce_down_165",
+          "parent": "bounce_up_163",
+          "inputs": {
+            "DURATION": [
+              1,
+              [
+                5,
+                "0.05"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "bounce_down_165": {
+          "opcode": "motion_changeyby",
+          "next": "bounce_wait2_166",
+          "parent": "bounce_wait_164",
+          "inputs": {
+            "DY": [
+              1,
+              [
+                4,
+                "-15"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "bounce_wait2_166": {
+          "opcode": "control_wait",
+          "next": null,
+          "parent": "bounce_down_165",
+          "inputs": {
+            "DURATION": [
+              1,
+              [
+                5,
+                "0.05"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "play_inc_151": {
+          "opcode": "data_changevariableby",
+          "next": "play_cap_152",
+          "parent": "bounce_rep_162",
+          "inputs": {
+            "VALUE": [
+              1,
+              [
+                4,
+                "20"
+              ]
+            ]
+          },
+          "fields": {
+            "VARIABLE": [
+              "Happiness",
+              "var_happiness"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "play_cap_152": {
+          "opcode": "control_if",
+          "next": null,
+          "parent": "play_inc_151",
+          "inputs": {
+            "CONDITION": [
+              2,
+              "play_gt_100_167"
+            ],
+            "SUBSTACK": [
+              2,
+              "play_set_100_168"
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "play_gt_100_167": {
+          "opcode": "operator_gt",
+          "next": null,
+          "parent": "play_cap_152",
+          "inputs": {
+            "OPERAND1": [
+              3,
+              "play_read_hp_cap_169",
+              [
+                10,
+                ""
+              ]
+            ],
+            "OPERAND2": [
+              1,
+              [
+                10,
+                "100"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "play_read_hp_cap_169": {
+          "opcode": "data_variable",
+          "next": null,
+          "parent": "play_gt_100_167",
+          "inputs": {},
+          "fields": {
+            "VARIABLE": [
+              "Happiness",
+              "var_happiness"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "play_set_100_168": {
+          "opcode": "data_setvariableto",
+          "next": null,
+          "parent": "play_cap_152",
+          "inputs": {
+            "VALUE": [
+              1,
+              [
+                4,
+                "100"
+              ]
+            ]
+          },
+          "fields": {
+            "VARIABLE": [
+              "Happiness",
+              "var_happiness"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "sleep_recv_170": {
+          "opcode": "event_whenbroadcastreceived",
+          "next": "sleep_if_171",
+          "parent": null,
+          "inputs": {},
+          "fields": {
+            "BROADCAST_OPTION": [
+              "sleep",
+              "broadcast_sleep"
+            ]
+          },
+          "shadow": false,
+          "topLevel": true,
+          "x": 800,
+          "y": 700
+        },
+        "sleep_if_171": {
+          "opcode": "control_if_else",
+          "next": null,
+          "parent": "sleep_recv_170",
+          "inputs": {
+            "CONDITION": [
+              2,
+              "sleep_eq_174"
+            ],
+            "SUBSTACK": [
+              2,
+              "sleep_set_0_173"
+            ],
+            "SUBSTACK2": [
+              2,
+              "sleep_set_1_172"
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "sleep_eq_174": {
+          "opcode": "operator_equals",
+          "next": null,
+          "parent": "sleep_if_171",
+          "inputs": {
+            "OPERAND1": [
+              3,
+              "sleep_read_val_175",
+              [
+                10,
+                ""
+              ]
+            ],
+            "OPERAND2": [
+              1,
+              [
+                10,
+                "1"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "sleep_read_val_175": {
+          "opcode": "data_variable",
+          "next": null,
+          "parent": "sleep_eq_174",
+          "inputs": {},
+          "fields": {
+            "VARIABLE": [
+              "IsSleeping",
+              "var_issleeping"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "sleep_set_0_173": {
+          "opcode": "data_setvariableto",
+          "next": "wake_if_alien_176",
+          "parent": "sleep_if_171",
+          "inputs": {
+            "VALUE": [
+              1,
+              [
+                4,
+                "0"
+              ]
+            ]
+          },
+          "fields": {
+            "VARIABLE": [
+              "IsSleeping",
+              "var_issleeping"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "wake_if_alien_176": {
+          "opcode": "control_if_else",
+          "next": null,
+          "parent": "sleep_set_0_173",
+          "inputs": {
+            "CONDITION": [
+              2,
+              "wake_eq_alien_177"
+            ],
+            "SUBSTACK": [
+              2,
+              "wake_bg_alien_178"
+            ],
+            "SUBSTACK2": [
+              2,
+              "wake_if_puppy_179"
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "wake_eq_alien_177": {
+          "opcode": "operator_equals",
+          "next": null,
+          "parent": "wake_if_alien_176",
+          "inputs": {
+            "OPERAND1": [
+              3,
+              "wake_read_type1_183",
+              [
+                10,
+                ""
+              ]
+            ],
+            "OPERAND2": [
+              1,
+              [
+                10,
+                "Bloop"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "wake_read_type1_183": {
+          "opcode": "data_variable",
+          "next": null,
+          "parent": "wake_eq_alien_177",
+          "inputs": {},
+          "fields": {
+            "VARIABLE": [
+              "PetType",
+              "var_pettype"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "wake_bg_alien_178": {
+          "opcode": "looks_switchbackdropto",
+          "next": null,
+          "parent": "wake_if_alien_176",
+          "inputs": {
+            "BACKDROP": [
+              1,
+              [
+                10,
+                "bg_alien_day"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "wake_if_puppy_179": {
+          "opcode": "control_if_else",
+          "next": null,
+          "parent": "wake_if_alien_176",
+          "inputs": {
+            "CONDITION": [
+              2,
+              "wake_eq_puppy_180"
+            ],
+            "SUBSTACK": [
+              2,
+              "wake_bg_puppy_181"
+            ],
+            "SUBSTACK2": [
+              2,
+              "wake_bg_kitten_182"
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "wake_eq_puppy_180": {
+          "opcode": "operator_equals",
+          "next": null,
+          "parent": "wake_if_puppy_179",
+          "inputs": {
+            "OPERAND1": [
+              3,
+              "wake_read_type2_184",
+              [
+                10,
+                ""
+              ]
+            ],
+            "OPERAND2": [
+              1,
+              [
+                10,
+                "Waffles"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "wake_read_type2_184": {
+          "opcode": "data_variable",
+          "next": null,
+          "parent": "wake_eq_puppy_180",
+          "inputs": {},
+          "fields": {
+            "VARIABLE": [
+              "PetType",
+              "var_pettype"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "wake_bg_puppy_181": {
+          "opcode": "looks_switchbackdropto",
+          "next": null,
+          "parent": "wake_if_puppy_179",
+          "inputs": {
+            "BACKDROP": [
+              1,
+              [
+                10,
+                "bg_puppy_day"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "wake_bg_kitten_182": {
+          "opcode": "looks_switchbackdropto",
+          "next": null,
+          "parent": "wake_if_puppy_179",
+          "inputs": {
+            "BACKDROP": [
+              1,
+              [
+                10,
+                "bg_robo_day"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "sleep_set_1_172": {
+          "opcode": "data_setvariableto",
+          "next": "sleep_if_alien_185",
+          "parent": "sleep_if_171",
+          "inputs": {
+            "VALUE": [
+              1,
+              [
+                4,
+                "1"
+              ]
+            ]
+          },
+          "fields": {
+            "VARIABLE": [
+              "IsSleeping",
+              "var_issleeping"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "sleep_if_alien_185": {
+          "opcode": "control_if_else",
+          "next": null,
+          "parent": "sleep_set_1_172",
+          "inputs": {
+            "CONDITION": [
+              2,
+              "sleep_eq_alien_186"
+            ],
+            "SUBSTACK": [
+              2,
+              "sleep_bg_alien_187"
+            ],
+            "SUBSTACK2": [
+              2,
+              "sleep_if_puppy_189"
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "sleep_eq_alien_186": {
+          "opcode": "operator_equals",
+          "next": null,
+          "parent": "sleep_if_alien_185",
+          "inputs": {
+            "OPERAND1": [
+              3,
+              "sleep_read_type1_s_195",
+              [
+                10,
+                ""
+              ]
+            ],
+            "OPERAND2": [
+              1,
+              [
+                10,
+                "Bloop"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "sleep_read_type1_s_195": {
+          "opcode": "data_variable",
+          "next": null,
+          "parent": "sleep_eq_alien_186",
+          "inputs": {},
+          "fields": {
+            "VARIABLE": [
+              "PetType",
+              "var_pettype"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "sleep_bg_alien_187": {
+          "opcode": "looks_switchbackdropto",
+          "next": "sleep_play_alien_188",
+          "parent": "sleep_if_alien_185",
+          "inputs": {
+            "BACKDROP": [
+              1,
+              [
+                10,
+                "bg_alien_night"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "sleep_play_alien_188": {
+          "opcode": "sound_play",
+          "next": null,
+          "parent": "sleep_bg_alien_187",
+          "inputs": {
+            "SOUND_MENU": [
+              1,
+              [
+                10,
+                "sound_alien_snore"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "sleep_if_puppy_189": {
+          "opcode": "control_if_else",
+          "next": null,
+          "parent": "sleep_if_alien_185",
+          "inputs": {
+            "CONDITION": [
+              2,
+              "sleep_eq_puppy_190"
+            ],
+            "SUBSTACK": [
+              2,
+              "sleep_bg_puppy_191"
+            ],
+            "SUBSTACK2": [
+              2,
+              "sleep_bg_kitten_193"
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "sleep_eq_puppy_190": {
+          "opcode": "operator_equals",
+          "next": null,
+          "parent": "sleep_if_puppy_189",
+          "inputs": {
+            "OPERAND1": [
+              3,
+              "sleep_read_type2_s_196",
+              [
+                10,
+                ""
+              ]
+            ],
+            "OPERAND2": [
+              1,
+              [
+                10,
+                "Waffles"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "sleep_read_type2_s_196": {
+          "opcode": "data_variable",
+          "next": null,
+          "parent": "sleep_eq_puppy_190",
+          "inputs": {},
+          "fields": {
+            "VARIABLE": [
+              "PetType",
+              "var_pettype"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "sleep_bg_puppy_191": {
+          "opcode": "looks_switchbackdropto",
+          "next": "sleep_play_puppy_192",
+          "parent": "sleep_if_puppy_189",
+          "inputs": {
+            "BACKDROP": [
+              1,
+              [
+                10,
+                "bg_puppy_night"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "sleep_play_puppy_192": {
+          "opcode": "sound_play",
+          "next": null,
+          "parent": "sleep_bg_puppy_191",
+          "inputs": {
+            "SOUND_MENU": [
+              1,
+              [
+                10,
+                "sound_puppy_snore"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "sleep_bg_kitten_193": {
+          "opcode": "looks_switchbackdropto",
+          "next": "sleep_play_kitten_194",
+          "parent": "sleep_if_puppy_189",
+          "inputs": {
+            "BACKDROP": [
+              1,
+              [
+                10,
+                "bg_robo_night"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "sleep_play_kitten_194": {
+          "opcode": "sound_play",
+          "next": null,
+          "parent": "sleep_bg_kitten_193",
+          "inputs": {
+            "SOUND_MENU": [
+              1,
+              [
+                10,
+                "sound_kitten_snore"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "fix_energy_read_1": {
+          "opcode": "data_variable",
+          "next": null,
+          "parent": "fix_energy_lt_1",
+          "inputs": {},
+          "fields": {
+            "VARIABLE": [
+              "Energy",
+              "var_energy"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "fix_energy_lt_1": {
+          "opcode": "operator_lt",
+          "next": null,
+          "parent": "fix_outer_or_1",
+          "inputs": {
+            "OPERAND1": [
+              3,
+              "fix_energy_read_1",
+              [
+                10,
+                ""
+              ]
+            ],
+            "OPERAND2": [
+              1,
+              [
+                10,
+                "1"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "fix_outer_or_1": {
+          "opcode": "operator_or",
+          "next": null,
+          "parent": "state_check_ghost_87",
+          "inputs": {
+            "OPERAND1": [
+              2,
+              "state_or_ghost_88"
+            ],
+            "OPERAND2": [
+              2,
+              "fix_energy_lt_1"
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "fix_pet_hide_go_1": {
+          "opcode": "looks_hide",
+          "next": "state_stop_others_93",
+          "parent": "state_broadcast_go_92",
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        }
+      },
+      "comments": {},
+      "currentCostume": 0,
+      "costumes": [
+        {
+          "assetId": "Bloop_normal_f1",
+          "name": "Bloop_normal_f1",
+          "md5ext": "bloop_normal_f1.png",
+          "dataFormat": "png",
+          "rotationCenterX": 100,
+          "rotationCenterY": 100
+        },
+        {
+          "assetId": "Bloop_normal_f2",
+          "name": "Bloop_normal_f2",
+          "md5ext": "bloop_normal_f2.png",
+          "dataFormat": "png",
+          "rotationCenterX": 100,
+          "rotationCenterY": 100
+        },
+        {
+          "assetId": "Bloop_sad_f1",
+          "name": "Bloop_sad_f1",
+          "md5ext": "bloop_sad_f1.png",
+          "dataFormat": "png",
+          "rotationCenterX": 100,
+          "rotationCenterY": 100
+        },
+        {
+          "assetId": "Bloop_sad_f2",
+          "name": "Bloop_sad_f2",
+          "md5ext": "bloop_sad_f2.png",
+          "dataFormat": "png",
+          "rotationCenterX": 100,
+          "rotationCenterY": 100
+        },
+        {
+          "assetId": "Bloop_eating_f1",
+          "name": "Bloop_eating_f1",
+          "md5ext": "bloop_eating_f1.png",
+          "dataFormat": "png",
+          "rotationCenterX": 100,
+          "rotationCenterY": 100
+        },
+        {
+          "assetId": "Bloop_eating_f2",
+          "name": "Bloop_eating_f2",
+          "md5ext": "bloop_eating_f2.png",
+          "dataFormat": "png",
+          "rotationCenterX": 100,
+          "rotationCenterY": 100
+        },
+        {
+          "assetId": "Bloop_sleeping_f1",
+          "name": "Bloop_sleeping_f1",
+          "md5ext": "bloop_sleeping_f1.png",
+          "dataFormat": "png",
+          "rotationCenterX": 100,
+          "rotationCenterY": 100
+        },
+        {
+          "assetId": "Bloop_sleeping_f2",
+          "name": "Bloop_sleeping_f2",
+          "md5ext": "bloop_sleeping_f2.png",
+          "dataFormat": "png",
+          "rotationCenterX": 100,
+          "rotationCenterY": 100
+        },
+        {
+          "assetId": "Bloop_ghost_f1",
+          "name": "Bloop_ghost_f1",
+          "md5ext": "bloop_ghost_f1.png",
+          "dataFormat": "png",
+          "rotationCenterX": 100,
+          "rotationCenterY": 100
+        },
+        {
+          "assetId": "Bloop_ghost_f2",
+          "name": "Bloop_ghost_f2",
+          "md5ext": "bloop_ghost_f2.png",
+          "dataFormat": "png",
+          "rotationCenterX": 100,
+          "rotationCenterY": 100
+        },
+        {
+          "assetId": "Waffles_normal_f1",
+          "name": "Waffles_normal_f1",
+          "md5ext": "waffles_normal_f1.png",
+          "dataFormat": "png",
+          "rotationCenterX": 100,
+          "rotationCenterY": 100
+        },
+        {
+          "assetId": "Waffles_normal_f2",
+          "name": "Waffles_normal_f2",
+          "md5ext": "waffles_normal_f2.png",
+          "dataFormat": "png",
+          "rotationCenterX": 100,
+          "rotationCenterY": 100
+        },
+        {
+          "assetId": "Waffles_sad_f1",
+          "name": "Waffles_sad_f1",
+          "md5ext": "waffles_sad_f1.png",
+          "dataFormat": "png",
+          "rotationCenterX": 100,
+          "rotationCenterY": 100
+        },
+        {
+          "assetId": "Waffles_sad_f2",
+          "name": "Waffles_sad_f2",
+          "md5ext": "waffles_sad_f2.png",
+          "dataFormat": "png",
+          "rotationCenterX": 100,
+          "rotationCenterY": 100
+        },
+        {
+          "assetId": "Waffles_eating_f1",
+          "name": "Waffles_eating_f1",
+          "md5ext": "waffles_eating_f1.png",
+          "dataFormat": "png",
+          "rotationCenterX": 100,
+          "rotationCenterY": 100
+        },
+        {
+          "assetId": "Waffles_eating_f2",
+          "name": "Waffles_eating_f2",
+          "md5ext": "waffles_eating_f2.png",
+          "dataFormat": "png",
+          "rotationCenterX": 100,
+          "rotationCenterY": 100
+        },
+        {
+          "assetId": "Waffles_sleeping_f1",
+          "name": "Waffles_sleeping_f1",
+          "md5ext": "waffles_sleeping_f1.png",
+          "dataFormat": "png",
+          "rotationCenterX": 100,
+          "rotationCenterY": 100
+        },
+        {
+          "assetId": "Waffles_sleeping_f2",
+          "name": "Waffles_sleeping_f2",
+          "md5ext": "waffles_sleeping_f2.png",
+          "dataFormat": "png",
+          "rotationCenterX": 100,
+          "rotationCenterY": 100
+        },
+        {
+          "assetId": "Waffles_ghost_f1",
+          "name": "Waffles_ghost_f1",
+          "md5ext": "waffles_ghost_f1.png",
+          "dataFormat": "png",
+          "rotationCenterX": 100,
+          "rotationCenterY": 100
+        },
+        {
+          "assetId": "Waffles_ghost_f2",
+          "name": "Waffles_ghost_f2",
+          "md5ext": "waffles_ghost_f2.png",
+          "dataFormat": "png",
+          "rotationCenterX": 100,
+          "rotationCenterY": 100
+        },
+        {
+          "assetId": "Gizmo_normal_f1",
+          "name": "Gizmo_normal_f1",
+          "md5ext": "gizmo_normal_f1.png",
+          "dataFormat": "png",
+          "rotationCenterX": 100,
+          "rotationCenterY": 100
+        },
+        {
+          "assetId": "Gizmo_normal_f2",
+          "name": "Gizmo_normal_f2",
+          "md5ext": "gizmo_normal_f2.png",
+          "dataFormat": "png",
+          "rotationCenterX": 100,
+          "rotationCenterY": 100
+        },
+        {
+          "assetId": "Gizmo_sad_f1",
+          "name": "Gizmo_sad_f1",
+          "md5ext": "gizmo_sad_f1.png",
+          "dataFormat": "png",
+          "rotationCenterX": 100,
+          "rotationCenterY": 100
+        },
+        {
+          "assetId": "Gizmo_sad_f2",
+          "name": "Gizmo_sad_f2",
+          "md5ext": "gizmo_sad_f2.png",
+          "dataFormat": "png",
+          "rotationCenterX": 100,
+          "rotationCenterY": 100
+        },
+        {
+          "assetId": "Gizmo_eating_f1",
+          "name": "Gizmo_eating_f1",
+          "md5ext": "gizmo_eating_f1.png",
+          "dataFormat": "png",
+          "rotationCenterX": 100,
+          "rotationCenterY": 100
+        },
+        {
+          "assetId": "Gizmo_eating_f2",
+          "name": "Gizmo_eating_f2",
+          "md5ext": "gizmo_eating_f2.png",
+          "dataFormat": "png",
+          "rotationCenterX": 100,
+          "rotationCenterY": 100
+        },
+        {
+          "assetId": "Gizmo_sleeping_f1",
+          "name": "Gizmo_sleeping_f1",
+          "md5ext": "gizmo_sleeping_f1.png",
+          "dataFormat": "png",
+          "rotationCenterX": 100,
+          "rotationCenterY": 100
+        },
+        {
+          "assetId": "Gizmo_sleeping_f2",
+          "name": "Gizmo_sleeping_f2",
+          "md5ext": "gizmo_sleeping_f2.png",
+          "dataFormat": "png",
+          "rotationCenterX": 100,
+          "rotationCenterY": 100
+        },
+        {
+          "assetId": "Gizmo_ghost_f1",
+          "name": "Gizmo_ghost_f1",
+          "md5ext": "gizmo_ghost_f1.png",
+          "dataFormat": "png",
+          "rotationCenterX": 100,
+          "rotationCenterY": 100
+        },
+        {
+          "assetId": "Gizmo_ghost_f2",
+          "name": "Gizmo_ghost_f2",
+          "md5ext": "gizmo_ghost_f2.png",
+          "dataFormat": "png",
+          "rotationCenterX": 100,
+          "rotationCenterY": 100
+        }
+      ],
+      "sounds": [
+        {
+          "assetId": "sound_alien_munch",
+          "name": "sound_alien_munch",
+          "md5ext": "sound_alien_munch.wav",
+          "dataFormat": "wav",
+          "format": "",
+          "rate": 44100,
+          "sampleCount": 44100
+        },
+        {
+          "assetId": "sound_alien_boing",
+          "name": "sound_alien_boing",
+          "md5ext": "sound_alien_boing.wav",
+          "dataFormat": "wav",
+          "format": "",
+          "rate": 44100,
+          "sampleCount": 44100
+        },
+        {
+          "assetId": "sound_alien_snore",
+          "name": "sound_alien_snore",
+          "md5ext": "sound_alien_snore.wav",
+          "dataFormat": "wav",
+          "format": "",
+          "rate": 44100,
+          "sampleCount": 44100
+        },
+        {
+          "assetId": "sound_alien_hello",
+          "name": "sound_alien_hello",
+          "md5ext": "sound_alien_hello.wav",
+          "dataFormat": "wav",
+          "format": "",
+          "rate": 44100,
+          "sampleCount": 44100
+        },
+        {
+          "assetId": "sound_puppy_munch",
+          "name": "sound_puppy_munch",
+          "md5ext": "sound_puppy_munch.wav",
+          "dataFormat": "wav",
+          "format": "",
+          "rate": 44100,
+          "sampleCount": 44100
+        },
+        {
+          "assetId": "sound_puppy_boing",
+          "name": "sound_puppy_boing",
+          "md5ext": "sound_puppy_boing.wav",
+          "dataFormat": "wav",
+          "format": "",
+          "rate": 44100,
+          "sampleCount": 44100
+        },
+        {
+          "assetId": "sound_puppy_snore",
+          "name": "sound_puppy_snore",
+          "md5ext": "sound_puppy_snore.wav",
+          "dataFormat": "wav",
+          "format": "",
+          "rate": 44100,
+          "sampleCount": 44100
+        },
+        {
+          "assetId": "sound_puppy_hello",
+          "name": "sound_puppy_hello",
+          "md5ext": "sound_puppy_hello.wav",
+          "dataFormat": "wav",
+          "format": "",
+          "rate": 44100,
+          "sampleCount": 44100
+        },
+        {
+          "assetId": "sound_kitten_munch",
+          "name": "sound_kitten_munch",
+          "md5ext": "sound_kitten_munch.wav",
+          "dataFormat": "wav",
+          "format": "",
+          "rate": 44100,
+          "sampleCount": 44100
+        },
+        {
+          "assetId": "sound_kitten_boing",
+          "name": "sound_kitten_boing",
+          "md5ext": "sound_kitten_boing.wav",
+          "dataFormat": "wav",
+          "format": "",
+          "rate": 44100,
+          "sampleCount": 44100
+        },
+        {
+          "assetId": "sound_kitten_snore",
+          "name": "sound_kitten_snore",
+          "md5ext": "sound_kitten_snore.wav",
+          "dataFormat": "wav",
+          "format": "",
+          "rate": 44100,
+          "sampleCount": 44100
+        },
+        {
+          "assetId": "sound_kitten_hello",
+          "name": "sound_kitten_hello",
+          "md5ext": "sound_kitten_hello.wav",
+          "dataFormat": "wav",
+          "format": "",
+          "rate": 44100,
+          "sampleCount": 44100
+        }
+      ],
+      "volume": 100,
+      "layerOrder": 5,
+      "visible": false,
+      "x": 0,
+      "y": -20,
+      "size": 100,
+      "direction": 90,
+      "draggable": false,
+      "rotationStyle": "all around"
+    },
+    {
+      "isStage": false,
+      "name": "FeedButton",
+      "variables": {},
+      "lists": {},
+      "broadcasts": {},
+      "blocks": {
+        "act_feed_flag_197": {
+          "opcode": "event_whenflagclicked",
+          "next": "act_feed_hide_198",
+          "parent": null,
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": true,
+          "x": 100,
+          "y": 100
+        },
+        "act_feed_hide_198": {
+          "opcode": "looks_hide",
+          "next": null,
+          "parent": "act_feed_flag_197",
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "act_feed_recv_199": {
+          "opcode": "event_whenbroadcastreceived",
+          "next": "act_feed_goto_200",
+          "parent": null,
+          "inputs": {},
+          "fields": {
+            "BROADCAST_OPTION": [
+              "start_game",
+              "broadcast_start_game"
+            ]
+          },
+          "shadow": false,
+          "topLevel": true,
+          "x": 100,
+          "y": 250
+        },
+        "act_feed_goto_200": {
+          "opcode": "motion_gotoxy",
+          "next": "act_feed_show_201",
+          "parent": "act_feed_recv_199",
+          "inputs": {
+            "X": [
+              1,
+              [
+                4,
+                "-120"
+              ]
+            ],
+            "Y": [
+              1,
+              [
+                4,
+                "-130"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "act_feed_show_201": {
+          "opcode": "looks_show",
+          "next": null,
+          "parent": "act_feed_goto_200",
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "act_feed_recv_go_202": {
+          "opcode": "event_whenbroadcastreceived",
+          "next": "act_feed_hide_go_203",
+          "parent": null,
+          "inputs": {},
+          "fields": {
+            "BROADCAST_OPTION": [
+              "game_over",
+              "broadcast_game_over"
+            ]
+          },
+          "shadow": false,
+          "topLevel": true,
+          "x": 100,
+          "y": 400
+        },
+        "act_feed_hide_go_203": {
+          "opcode": "looks_hide",
+          "next": null,
+          "parent": "act_feed_recv_go_202",
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "act_feed_click_204": {
+          "opcode": "event_whenthisspriteclicked",
+          "next": "act_feed_broadcast_205",
+          "parent": null,
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": true,
+          "x": 100,
+          "y": 550
+        },
+        "act_feed_broadcast_205": {
+          "opcode": "event_broadcast",
+          "next": null,
+          "parent": "act_feed_click_204",
+          "inputs": {
+            "BROADCAST_INPUT": [
+              1,
+              [
+                11,
+                "feed",
+                "broadcast_feed"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        }
+      },
+      "comments": {},
+      "currentCostume": 0,
+      "costumes": [
+        {
+          "assetId": "button_feed",
+          "name": "button_feed",
+          "md5ext": "button_feed.png",
+          "dataFormat": "png",
+          "rotationCenterX": 40,
+          "rotationCenterY": 40
+        }
+      ],
+      "sounds": [],
+      "volume": 100,
+      "layerOrder": 6,
+      "visible": false,
+      "x": -120,
+      "y": -130,
+      "size": 100,
+      "direction": 90,
+      "draggable": false,
+      "rotationStyle": "all around"
+    },
+    {
+      "isStage": false,
+      "name": "PlayButton",
+      "variables": {},
+      "lists": {},
+      "broadcasts": {},
+      "blocks": {
+        "act_play_flag_206": {
+          "opcode": "event_whenflagclicked",
+          "next": "act_play_hide_207",
+          "parent": null,
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": true,
+          "x": 100,
+          "y": 100
+        },
+        "act_play_hide_207": {
+          "opcode": "looks_hide",
+          "next": null,
+          "parent": "act_play_flag_206",
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "act_play_recv_208": {
+          "opcode": "event_whenbroadcastreceived",
+          "next": "act_play_goto_209",
+          "parent": null,
+          "inputs": {},
+          "fields": {
+            "BROADCAST_OPTION": [
+              "start_game",
+              "broadcast_start_game"
+            ]
+          },
+          "shadow": false,
+          "topLevel": true,
+          "x": 100,
+          "y": 250
+        },
+        "act_play_goto_209": {
+          "opcode": "motion_gotoxy",
+          "next": "act_play_show_210",
+          "parent": "act_play_recv_208",
+          "inputs": {
+            "X": [
+              1,
+              [
+                4,
+                "0"
+              ]
+            ],
+            "Y": [
+              1,
+              [
+                4,
+                "-130"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "act_play_show_210": {
+          "opcode": "looks_show",
+          "next": null,
+          "parent": "act_play_goto_209",
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "act_play_recv_go_211": {
+          "opcode": "event_whenbroadcastreceived",
+          "next": "act_play_hide_go_212",
+          "parent": null,
+          "inputs": {},
+          "fields": {
+            "BROADCAST_OPTION": [
+              "game_over",
+              "broadcast_game_over"
+            ]
+          },
+          "shadow": false,
+          "topLevel": true,
+          "x": 100,
+          "y": 400
+        },
+        "act_play_hide_go_212": {
+          "opcode": "looks_hide",
+          "next": null,
+          "parent": "act_play_recv_go_211",
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "act_play_click_213": {
+          "opcode": "event_whenthisspriteclicked",
+          "next": "act_play_broadcast_214",
+          "parent": null,
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": true,
+          "x": 100,
+          "y": 550
+        },
+        "act_play_broadcast_214": {
+          "opcode": "event_broadcast",
+          "next": null,
+          "parent": "act_play_click_213",
+          "inputs": {
+            "BROADCAST_INPUT": [
+              1,
+              [
+                11,
+                "play",
+                "broadcast_play"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        }
+      },
+      "comments": {},
+      "currentCostume": 0,
+      "costumes": [
+        {
+          "assetId": "button_play",
+          "name": "button_play",
+          "md5ext": "button_play.png",
+          "dataFormat": "png",
+          "rotationCenterX": 40,
+          "rotationCenterY": 40
+        }
+      ],
+      "sounds": [],
+      "volume": 100,
+      "layerOrder": 7,
+      "visible": false,
+      "x": 0,
+      "y": -130,
+      "size": 100,
+      "direction": 90,
+      "draggable": false,
+      "rotationStyle": "all around"
+    },
+    {
+      "isStage": false,
+      "name": "SleepButton",
+      "variables": {},
+      "lists": {},
+      "broadcasts": {},
+      "blocks": {
+        "act_sleep_flag_215": {
+          "opcode": "event_whenflagclicked",
+          "next": "act_sleep_hide_216",
+          "parent": null,
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": true,
+          "x": 100,
+          "y": 100
+        },
+        "act_sleep_hide_216": {
+          "opcode": "looks_hide",
+          "next": null,
+          "parent": "act_sleep_flag_215",
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "act_sleep_recv_217": {
+          "opcode": "event_whenbroadcastreceived",
+          "next": "act_sleep_goto_218",
+          "parent": null,
+          "inputs": {},
+          "fields": {
+            "BROADCAST_OPTION": [
+              "start_game",
+              "broadcast_start_game"
+            ]
+          },
+          "shadow": false,
+          "topLevel": true,
+          "x": 100,
+          "y": 250
+        },
+        "act_sleep_goto_218": {
+          "opcode": "motion_gotoxy",
+          "next": "act_sleep_show_219",
+          "parent": "act_sleep_recv_217",
+          "inputs": {
+            "X": [
+              1,
+              [
+                4,
+                "120"
+              ]
+            ],
+            "Y": [
+              1,
+              [
+                4,
+                "-130"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "act_sleep_show_219": {
+          "opcode": "looks_show",
+          "next": null,
+          "parent": "act_sleep_goto_218",
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "act_sleep_recv_go_220": {
+          "opcode": "event_whenbroadcastreceived",
+          "next": "act_sleep_hide_go_221",
+          "parent": null,
+          "inputs": {},
+          "fields": {
+            "BROADCAST_OPTION": [
+              "game_over",
+              "broadcast_game_over"
+            ]
+          },
+          "shadow": false,
+          "topLevel": true,
+          "x": 100,
+          "y": 400
+        },
+        "act_sleep_hide_go_221": {
+          "opcode": "looks_hide",
+          "next": null,
+          "parent": "act_sleep_recv_go_220",
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "act_sleep_click_222": {
+          "opcode": "event_whenthisspriteclicked",
+          "next": "act_sleep_broadcast_223",
+          "parent": null,
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": true,
+          "x": 100,
+          "y": 550
+        },
+        "act_sleep_broadcast_223": {
+          "opcode": "event_broadcast",
+          "next": null,
+          "parent": "act_sleep_click_222",
+          "inputs": {
+            "BROADCAST_INPUT": [
+              1,
+              [
+                11,
+                "sleep",
+                "broadcast_sleep"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        }
+      },
+      "comments": {},
+      "currentCostume": 0,
+      "costumes": [
+        {
+          "assetId": "button_sleep",
+          "name": "button_sleep",
+          "md5ext": "button_sleep.png",
+          "dataFormat": "png",
+          "rotationCenterX": 40,
+          "rotationCenterY": 40
+        }
+      ],
+      "sounds": [],
+      "volume": 100,
+      "layerOrder": 8,
+      "visible": false,
+      "x": 120,
+      "y": -130,
+      "size": 100,
+      "direction": 90,
+      "draggable": false,
+      "rotationStyle": "all around"
+    },
+    {
+      "isStage": false,
+      "name": "StatBar_Hunger",
+      "variables": {},
+      "lists": {},
+      "broadcasts": {},
+      "blocks": {
+        "bar_Hunger_flag_224": {
+          "opcode": "event_whenflagclicked",
+          "next": "bar_Hunger_hide_225",
+          "parent": null,
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": true,
+          "x": 100,
+          "y": 100
+        },
+        "bar_Hunger_hide_225": {
+          "opcode": "looks_hide",
+          "next": null,
+          "parent": "bar_Hunger_flag_224",
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "bar_Hunger_recv_226": {
+          "opcode": "event_whenbroadcastreceived",
+          "next": "bar_Hunger_goto_227",
+          "parent": null,
+          "inputs": {},
+          "fields": {
+            "BROADCAST_OPTION": [
+              "start_game",
+              "broadcast_start_game"
+            ]
+          },
+          "shadow": false,
+          "topLevel": true,
+          "x": 100,
+          "y": 250
+        },
+        "bar_Hunger_goto_227": {
+          "opcode": "motion_gotoxy",
+          "next": "bar_Hunger_show_228",
+          "parent": "bar_Hunger_recv_226",
+          "inputs": {
+            "X": [
+              1,
+              [
+                4,
+                "-100"
+              ]
+            ],
+            "Y": [
+              1,
+              [
+                4,
+                "140"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "bar_Hunger_show_228": {
+          "opcode": "looks_show",
+          "next": "bar_Hunger_loop_229",
+          "parent": "bar_Hunger_goto_227",
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "bar_Hunger_loop_229": {
+          "opcode": "control_forever",
+          "next": null,
+          "parent": "bar_Hunger_show_228",
+          "inputs": {
+            "SUBSTACK": [
+              2,
+              "bar_Hunger_if_full_231"
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "bar_Hunger_if_full_231": {
+          "opcode": "control_if_else",
+          "next": "bar_Hunger_wait_230",
+          "parent": "bar_Hunger_loop_229",
+          "inputs": {
+            "CONDITION": [
+              2,
+              "bar_Hunger_gt_74_232"
+            ],
+            "SUBSTACK": [
+              2,
+              "bar_Hunger_set_full_233"
+            ],
+            "SUBSTACK2": [
+              2,
+              "bar_Hunger_if_medium_234"
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "bar_Hunger_gt_74_232": {
+          "opcode": "operator_gt",
+          "next": null,
+          "parent": "bar_Hunger_if_full_231",
+          "inputs": {
+            "OPERAND1": [
+              3,
+              "bar_Hunger_read_1_235",
+              [
+                10,
+                ""
+              ]
+            ],
+            "OPERAND2": [
+              1,
+              [
+                10,
+                "74"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "bar_Hunger_read_1_235": {
+          "opcode": "data_variable",
+          "next": null,
+          "parent": "bar_Hunger_gt_74_232",
+          "inputs": {},
+          "fields": {
+            "VARIABLE": [
+              "Hunger",
+              "var_hunger"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "bar_Hunger_set_full_233": {
+          "opcode": "looks_switchcostumeto",
+          "next": null,
+          "parent": "bar_Hunger_if_full_231",
+          "inputs": {
+            "COSTUME": [
+              1,
+              [
+                10,
+                "bar_full"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "bar_Hunger_if_medium_234": {
+          "opcode": "control_if_else",
+          "next": null,
+          "parent": "bar_Hunger_if_full_231",
+          "inputs": {
+            "CONDITION": [
+              2,
+              "bar_Hunger_gt_39_236"
+            ],
+            "SUBSTACK": [
+              2,
+              "bar_Hunger_set_medium_237"
+            ],
+            "SUBSTACK2": [
+              2,
+              "bar_Hunger_if_low_238"
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "bar_Hunger_gt_39_236": {
+          "opcode": "operator_gt",
+          "next": null,
+          "parent": "bar_Hunger_if_medium_234",
+          "inputs": {
+            "OPERAND1": [
+              3,
+              "bar_Hunger_read_2_239",
+              [
+                10,
+                ""
+              ]
+            ],
+            "OPERAND2": [
+              1,
+              [
+                10,
+                "39"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "bar_Hunger_read_2_239": {
+          "opcode": "data_variable",
+          "next": null,
+          "parent": "bar_Hunger_gt_39_236",
+          "inputs": {},
+          "fields": {
+            "VARIABLE": [
+              "Hunger",
+              "var_hunger"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "bar_Hunger_set_medium_237": {
+          "opcode": "looks_switchcostumeto",
+          "next": null,
+          "parent": "bar_Hunger_if_medium_234",
+          "inputs": {
+            "COSTUME": [
+              1,
+              [
+                10,
+                "bar_medium"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "bar_Hunger_if_low_238": {
+          "opcode": "control_if_else",
+          "next": null,
+          "parent": "bar_Hunger_if_medium_234",
+          "inputs": {
+            "CONDITION": [
+              2,
+              "bar_Hunger_gt_14_240"
+            ],
+            "SUBSTACK": [
+              2,
+              "bar_Hunger_set_low_241"
+            ],
+            "SUBSTACK2": [
+              2,
+              "bar_Hunger_set_critical_242"
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "bar_Hunger_gt_14_240": {
+          "opcode": "operator_gt",
+          "next": null,
+          "parent": "bar_Hunger_if_low_238",
+          "inputs": {
+            "OPERAND1": [
+              3,
+              "bar_Hunger_read_3_243",
+              [
+                10,
+                ""
+              ]
+            ],
+            "OPERAND2": [
+              1,
+              [
+                10,
+                "14"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "bar_Hunger_read_3_243": {
+          "opcode": "data_variable",
+          "next": null,
+          "parent": "bar_Hunger_gt_14_240",
+          "inputs": {},
+          "fields": {
+            "VARIABLE": [
+              "Hunger",
+              "var_hunger"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "bar_Hunger_set_low_241": {
+          "opcode": "looks_switchcostumeto",
+          "next": null,
+          "parent": "bar_Hunger_if_low_238",
+          "inputs": {
+            "COSTUME": [
+              1,
+              [
+                10,
+                "bar_low"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "bar_Hunger_set_critical_242": {
+          "opcode": "looks_switchcostumeto",
+          "next": null,
+          "parent": "bar_Hunger_if_low_238",
+          "inputs": {
+            "COSTUME": [
+              1,
+              [
+                10,
+                "bar_critical"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "bar_Hunger_wait_230": {
+          "opcode": "control_wait",
+          "next": null,
+          "parent": "bar_Hunger_if_full_231",
+          "inputs": {
+            "DURATION": [
+              1,
+              [
+                5,
+                "0.2"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "bar_Hunger_recv_go_244": {
+          "opcode": "event_whenbroadcastreceived",
+          "next": "bar_Hunger_hide_go_245",
+          "parent": null,
+          "inputs": {},
+          "fields": {
+            "BROADCAST_OPTION": [
+              "game_over",
+              "broadcast_game_over"
+            ]
+          },
+          "shadow": false,
+          "topLevel": true,
+          "x": 100,
+          "y": 600
+        },
+        "bar_Hunger_hide_go_245": {
+          "opcode": "looks_hide",
+          "next": null,
+          "parent": "bar_Hunger_recv_go_244",
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        }
+      },
+      "comments": {},
+      "currentCostume": 0,
+      "costumes": [
+        {
+          "assetId": "bar_full",
+          "name": "bar_full",
+          "md5ext": "bar_full.png",
+          "dataFormat": "png",
+          "rotationCenterX": 60,
+          "rotationCenterY": 10
+        },
+        {
+          "assetId": "bar_medium",
+          "name": "bar_medium",
+          "md5ext": "bar_medium.png",
+          "dataFormat": "png",
+          "rotationCenterX": 60,
+          "rotationCenterY": 10
+        },
+        {
+          "assetId": "bar_low",
+          "name": "bar_low",
+          "md5ext": "bar_low.png",
+          "dataFormat": "png",
+          "rotationCenterX": 60,
+          "rotationCenterY": 10
+        },
+        {
+          "assetId": "bar_critical",
+          "name": "bar_critical",
+          "md5ext": "bar_critical.png",
+          "dataFormat": "png",
+          "rotationCenterX": 60,
+          "rotationCenterY": 10
+        }
+      ],
+      "sounds": [],
+      "volume": 100,
+      "layerOrder": 9,
+      "visible": false,
+      "x": -100,
+      "y": 140,
+      "size": 100,
+      "direction": 90,
+      "draggable": false,
+      "rotationStyle": "all around"
+    },
+    {
+      "isStage": false,
+      "name": "StatBar_Happiness",
+      "variables": {},
+      "lists": {},
+      "broadcasts": {},
+      "blocks": {
+        "bar_Happiness_flag_246": {
+          "opcode": "event_whenflagclicked",
+          "next": "bar_Happiness_hide_247",
+          "parent": null,
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": true,
+          "x": 100,
+          "y": 100
+        },
+        "bar_Happiness_hide_247": {
+          "opcode": "looks_hide",
+          "next": null,
+          "parent": "bar_Happiness_flag_246",
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "bar_Happiness_recv_248": {
+          "opcode": "event_whenbroadcastreceived",
+          "next": "bar_Happiness_goto_249",
+          "parent": null,
+          "inputs": {},
+          "fields": {
+            "BROADCAST_OPTION": [
+              "start_game",
+              "broadcast_start_game"
+            ]
+          },
+          "shadow": false,
+          "topLevel": true,
+          "x": 100,
+          "y": 250
+        },
+        "bar_Happiness_goto_249": {
+          "opcode": "motion_gotoxy",
+          "next": "bar_Happiness_show_250",
+          "parent": "bar_Happiness_recv_248",
+          "inputs": {
+            "X": [
+              1,
+              [
+                4,
+                "40"
+              ]
+            ],
+            "Y": [
+              1,
+              [
+                4,
+                "140"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "bar_Happiness_show_250": {
+          "opcode": "looks_show",
+          "next": "bar_Happiness_loop_251",
+          "parent": "bar_Happiness_goto_249",
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "bar_Happiness_loop_251": {
+          "opcode": "control_forever",
+          "next": null,
+          "parent": "bar_Happiness_show_250",
+          "inputs": {
+            "SUBSTACK": [
+              2,
+              "bar_Happiness_if_full_253"
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "bar_Happiness_if_full_253": {
+          "opcode": "control_if_else",
+          "next": "bar_Happiness_wait_252",
+          "parent": "bar_Happiness_loop_251",
+          "inputs": {
+            "CONDITION": [
+              2,
+              "bar_Happiness_gt_74_254"
+            ],
+            "SUBSTACK": [
+              2,
+              "bar_Happiness_set_full_255"
+            ],
+            "SUBSTACK2": [
+              2,
+              "bar_Happiness_if_medium_256"
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "bar_Happiness_gt_74_254": {
+          "opcode": "operator_gt",
+          "next": null,
+          "parent": "bar_Happiness_if_full_253",
+          "inputs": {
+            "OPERAND1": [
+              3,
+              "bar_Happiness_read_1_257",
+              [
+                10,
+                ""
+              ]
+            ],
+            "OPERAND2": [
+              1,
+              [
+                10,
+                "74"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "bar_Happiness_read_1_257": {
+          "opcode": "data_variable",
+          "next": null,
+          "parent": "bar_Happiness_gt_74_254",
+          "inputs": {},
+          "fields": {
+            "VARIABLE": [
+              "Happiness",
+              "var_happiness"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "bar_Happiness_set_full_255": {
+          "opcode": "looks_switchcostumeto",
+          "next": null,
+          "parent": "bar_Happiness_if_full_253",
+          "inputs": {
+            "COSTUME": [
+              1,
+              [
+                10,
+                "bar_full"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "bar_Happiness_if_medium_256": {
+          "opcode": "control_if_else",
+          "next": null,
+          "parent": "bar_Happiness_if_full_253",
+          "inputs": {
+            "CONDITION": [
+              2,
+              "bar_Happiness_gt_39_258"
+            ],
+            "SUBSTACK": [
+              2,
+              "bar_Happiness_set_medium_259"
+            ],
+            "SUBSTACK2": [
+              2,
+              "bar_Happiness_if_low_260"
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "bar_Happiness_gt_39_258": {
+          "opcode": "operator_gt",
+          "next": null,
+          "parent": "bar_Happiness_if_medium_256",
+          "inputs": {
+            "OPERAND1": [
+              3,
+              "bar_Happiness_read_2_261",
+              [
+                10,
+                ""
+              ]
+            ],
+            "OPERAND2": [
+              1,
+              [
+                10,
+                "39"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "bar_Happiness_read_2_261": {
+          "opcode": "data_variable",
+          "next": null,
+          "parent": "bar_Happiness_gt_39_258",
+          "inputs": {},
+          "fields": {
+            "VARIABLE": [
+              "Happiness",
+              "var_happiness"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "bar_Happiness_set_medium_259": {
+          "opcode": "looks_switchcostumeto",
+          "next": null,
+          "parent": "bar_Happiness_if_medium_256",
+          "inputs": {
+            "COSTUME": [
+              1,
+              [
+                10,
+                "bar_medium"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "bar_Happiness_if_low_260": {
+          "opcode": "control_if_else",
+          "next": null,
+          "parent": "bar_Happiness_if_medium_256",
+          "inputs": {
+            "CONDITION": [
+              2,
+              "bar_Happiness_gt_14_262"
+            ],
+            "SUBSTACK": [
+              2,
+              "bar_Happiness_set_low_263"
+            ],
+            "SUBSTACK2": [
+              2,
+              "bar_Happiness_set_critical_264"
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "bar_Happiness_gt_14_262": {
+          "opcode": "operator_gt",
+          "next": null,
+          "parent": "bar_Happiness_if_low_260",
+          "inputs": {
+            "OPERAND1": [
+              3,
+              "bar_Happiness_read_3_265",
+              [
+                10,
+                ""
+              ]
+            ],
+            "OPERAND2": [
+              1,
+              [
+                10,
+                "14"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "bar_Happiness_read_3_265": {
+          "opcode": "data_variable",
+          "next": null,
+          "parent": "bar_Happiness_gt_14_262",
+          "inputs": {},
+          "fields": {
+            "VARIABLE": [
+              "Happiness",
+              "var_happiness"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "bar_Happiness_set_low_263": {
+          "opcode": "looks_switchcostumeto",
+          "next": null,
+          "parent": "bar_Happiness_if_low_260",
+          "inputs": {
+            "COSTUME": [
+              1,
+              [
+                10,
+                "bar_low"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "bar_Happiness_set_critical_264": {
+          "opcode": "looks_switchcostumeto",
+          "next": null,
+          "parent": "bar_Happiness_if_low_260",
+          "inputs": {
+            "COSTUME": [
+              1,
+              [
+                10,
+                "bar_critical"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "bar_Happiness_wait_252": {
+          "opcode": "control_wait",
+          "next": null,
+          "parent": "bar_Happiness_if_full_253",
+          "inputs": {
+            "DURATION": [
+              1,
+              [
+                5,
+                "0.2"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "bar_Happiness_recv_go_266": {
+          "opcode": "event_whenbroadcastreceived",
+          "next": "bar_Happiness_hide_go_267",
+          "parent": null,
+          "inputs": {},
+          "fields": {
+            "BROADCAST_OPTION": [
+              "game_over",
+              "broadcast_game_over"
+            ]
+          },
+          "shadow": false,
+          "topLevel": true,
+          "x": 100,
+          "y": 600
+        },
+        "bar_Happiness_hide_go_267": {
+          "opcode": "looks_hide",
+          "next": null,
+          "parent": "bar_Happiness_recv_go_266",
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        }
+      },
+      "comments": {},
+      "currentCostume": 0,
+      "costumes": [
+        {
+          "assetId": "bar_full",
+          "name": "bar_full",
+          "md5ext": "bar_full.png",
+          "dataFormat": "png",
+          "rotationCenterX": 60,
+          "rotationCenterY": 10
+        },
+        {
+          "assetId": "bar_medium",
+          "name": "bar_medium",
+          "md5ext": "bar_medium.png",
+          "dataFormat": "png",
+          "rotationCenterX": 60,
+          "rotationCenterY": 10
+        },
+        {
+          "assetId": "bar_low",
+          "name": "bar_low",
+          "md5ext": "bar_low.png",
+          "dataFormat": "png",
+          "rotationCenterX": 60,
+          "rotationCenterY": 10
+        },
+        {
+          "assetId": "bar_critical",
+          "name": "bar_critical",
+          "md5ext": "bar_critical.png",
+          "dataFormat": "png",
+          "rotationCenterX": 60,
+          "rotationCenterY": 10
+        }
+      ],
+      "sounds": [],
+      "volume": 100,
+      "layerOrder": 10,
+      "visible": false,
+      "x": 40,
+      "y": 140,
+      "size": 100,
+      "direction": 90,
+      "draggable": false,
+      "rotationStyle": "all around"
+    },
+    {
+      "isStage": false,
+      "name": "StatBar_Energy",
+      "variables": {},
+      "lists": {},
+      "broadcasts": {},
+      "blocks": {
+        "bar_Energy_flag_268": {
+          "opcode": "event_whenflagclicked",
+          "next": "bar_Energy_hide_269",
+          "parent": null,
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": true,
+          "x": 100,
+          "y": 100
+        },
+        "bar_Energy_hide_269": {
+          "opcode": "looks_hide",
+          "next": null,
+          "parent": "bar_Energy_flag_268",
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "bar_Energy_recv_270": {
+          "opcode": "event_whenbroadcastreceived",
+          "next": "bar_Energy_goto_271",
+          "parent": null,
+          "inputs": {},
+          "fields": {
+            "BROADCAST_OPTION": [
+              "start_game",
+              "broadcast_start_game"
+            ]
+          },
+          "shadow": false,
+          "topLevel": true,
+          "x": 100,
+          "y": 250
+        },
+        "bar_Energy_goto_271": {
+          "opcode": "motion_gotoxy",
+          "next": "bar_Energy_show_272",
+          "parent": "bar_Energy_recv_270",
+          "inputs": {
+            "X": [
+              1,
+              [
+                4,
+                "180"
+              ]
+            ],
+            "Y": [
+              1,
+              [
+                4,
+                "140"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "bar_Energy_show_272": {
+          "opcode": "looks_show",
+          "next": "bar_Energy_loop_273",
+          "parent": "bar_Energy_goto_271",
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "bar_Energy_loop_273": {
+          "opcode": "control_forever",
+          "next": null,
+          "parent": "bar_Energy_show_272",
+          "inputs": {
+            "SUBSTACK": [
+              2,
+              "bar_Energy_if_full_275"
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "bar_Energy_if_full_275": {
+          "opcode": "control_if_else",
+          "next": "bar_Energy_wait_274",
+          "parent": "bar_Energy_loop_273",
+          "inputs": {
+            "CONDITION": [
+              2,
+              "bar_Energy_gt_74_276"
+            ],
+            "SUBSTACK": [
+              2,
+              "bar_Energy_set_full_277"
+            ],
+            "SUBSTACK2": [
+              2,
+              "bar_Energy_if_medium_278"
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "bar_Energy_gt_74_276": {
+          "opcode": "operator_gt",
+          "next": null,
+          "parent": "bar_Energy_if_full_275",
+          "inputs": {
+            "OPERAND1": [
+              3,
+              "bar_Energy_read_1_279",
+              [
+                10,
+                ""
+              ]
+            ],
+            "OPERAND2": [
+              1,
+              [
+                10,
+                "74"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "bar_Energy_read_1_279": {
+          "opcode": "data_variable",
+          "next": null,
+          "parent": "bar_Energy_gt_74_276",
+          "inputs": {},
+          "fields": {
+            "VARIABLE": [
+              "Energy",
+              "var_energy"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "bar_Energy_set_full_277": {
+          "opcode": "looks_switchcostumeto",
+          "next": null,
+          "parent": "bar_Energy_if_full_275",
+          "inputs": {
+            "COSTUME": [
+              1,
+              [
+                10,
+                "bar_full"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "bar_Energy_if_medium_278": {
+          "opcode": "control_if_else",
+          "next": null,
+          "parent": "bar_Energy_if_full_275",
+          "inputs": {
+            "CONDITION": [
+              2,
+              "bar_Energy_gt_39_280"
+            ],
+            "SUBSTACK": [
+              2,
+              "bar_Energy_set_medium_281"
+            ],
+            "SUBSTACK2": [
+              2,
+              "bar_Energy_if_low_282"
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "bar_Energy_gt_39_280": {
+          "opcode": "operator_gt",
+          "next": null,
+          "parent": "bar_Energy_if_medium_278",
+          "inputs": {
+            "OPERAND1": [
+              3,
+              "bar_Energy_read_2_283",
+              [
+                10,
+                ""
+              ]
+            ],
+            "OPERAND2": [
+              1,
+              [
+                10,
+                "39"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "bar_Energy_read_2_283": {
+          "opcode": "data_variable",
+          "next": null,
+          "parent": "bar_Energy_gt_39_280",
+          "inputs": {},
+          "fields": {
+            "VARIABLE": [
+              "Energy",
+              "var_energy"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "bar_Energy_set_medium_281": {
+          "opcode": "looks_switchcostumeto",
+          "next": null,
+          "parent": "bar_Energy_if_medium_278",
+          "inputs": {
+            "COSTUME": [
+              1,
+              [
+                10,
+                "bar_medium"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "bar_Energy_if_low_282": {
+          "opcode": "control_if_else",
+          "next": null,
+          "parent": "bar_Energy_if_medium_278",
+          "inputs": {
+            "CONDITION": [
+              2,
+              "bar_Energy_gt_14_284"
+            ],
+            "SUBSTACK": [
+              2,
+              "bar_Energy_set_low_285"
+            ],
+            "SUBSTACK2": [
+              2,
+              "bar_Energy_set_critical_286"
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "bar_Energy_gt_14_284": {
+          "opcode": "operator_gt",
+          "next": null,
+          "parent": "bar_Energy_if_low_282",
+          "inputs": {
+            "OPERAND1": [
+              3,
+              "bar_Energy_read_3_287",
+              [
+                10,
+                ""
+              ]
+            ],
+            "OPERAND2": [
+              1,
+              [
+                10,
+                "14"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "bar_Energy_read_3_287": {
+          "opcode": "data_variable",
+          "next": null,
+          "parent": "bar_Energy_gt_14_284",
+          "inputs": {},
+          "fields": {
+            "VARIABLE": [
+              "Energy",
+              "var_energy"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "bar_Energy_set_low_285": {
+          "opcode": "looks_switchcostumeto",
+          "next": null,
+          "parent": "bar_Energy_if_low_282",
+          "inputs": {
+            "COSTUME": [
+              1,
+              [
+                10,
+                "bar_low"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "bar_Energy_set_critical_286": {
+          "opcode": "looks_switchcostumeto",
+          "next": null,
+          "parent": "bar_Energy_if_low_282",
+          "inputs": {
+            "COSTUME": [
+              1,
+              [
+                10,
+                "bar_critical"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "bar_Energy_wait_274": {
+          "opcode": "control_wait",
+          "next": null,
+          "parent": "bar_Energy_if_full_275",
+          "inputs": {
+            "DURATION": [
+              1,
+              [
+                5,
+                "0.2"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "bar_Energy_recv_go_288": {
+          "opcode": "event_whenbroadcastreceived",
+          "next": "bar_Energy_hide_go_289",
+          "parent": null,
+          "inputs": {},
+          "fields": {
+            "BROADCAST_OPTION": [
+              "game_over",
+              "broadcast_game_over"
+            ]
+          },
+          "shadow": false,
+          "topLevel": true,
+          "x": 100,
+          "y": 600
+        },
+        "bar_Energy_hide_go_289": {
+          "opcode": "looks_hide",
+          "next": null,
+          "parent": "bar_Energy_recv_go_288",
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        }
+      },
+      "comments": {},
+      "currentCostume": 0,
+      "costumes": [
+        {
+          "assetId": "bar_full",
+          "name": "bar_full",
+          "md5ext": "bar_full.png",
+          "dataFormat": "png",
+          "rotationCenterX": 60,
+          "rotationCenterY": 10
+        },
+        {
+          "assetId": "bar_medium",
+          "name": "bar_medium",
+          "md5ext": "bar_medium.png",
+          "dataFormat": "png",
+          "rotationCenterX": 60,
+          "rotationCenterY": 10
+        },
+        {
+          "assetId": "bar_low",
+          "name": "bar_low",
+          "md5ext": "bar_low.png",
+          "dataFormat": "png",
+          "rotationCenterX": 60,
+          "rotationCenterY": 10
+        },
+        {
+          "assetId": "bar_critical",
+          "name": "bar_critical",
+          "md5ext": "bar_critical.png",
+          "dataFormat": "png",
+          "rotationCenterX": 60,
+          "rotationCenterY": 10
+        }
+      ],
+      "sounds": [],
+      "volume": 100,
+      "layerOrder": 11,
+      "visible": false,
+      "x": 180,
+      "y": 140,
+      "size": 100,
+      "direction": 90,
+      "draggable": false,
+      "rotationStyle": "all around"
+    },
+    {
+      "isStage": false,
+      "name": "StatIcon_Hunger",
+      "variables": {},
+      "lists": {},
+      "broadcasts": {},
+      "blocks": {
+        "icon_Hunger_flag_290": {
+          "opcode": "event_whenflagclicked",
+          "next": "icon_Hunger_hide_291",
+          "parent": null,
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": true,
+          "x": 100,
+          "y": 100
+        },
+        "icon_Hunger_hide_291": {
+          "opcode": "looks_hide",
+          "next": null,
+          "parent": "icon_Hunger_flag_290",
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "icon_Hunger_recv_292": {
+          "opcode": "event_whenbroadcastreceived",
+          "next": "icon_Hunger_goto_293",
+          "parent": null,
+          "inputs": {},
+          "fields": {
+            "BROADCAST_OPTION": [
+              "start_game",
+              "broadcast_start_game"
+            ]
+          },
+          "shadow": false,
+          "topLevel": true,
+          "x": 100,
+          "y": 250
+        },
+        "icon_Hunger_goto_293": {
+          "opcode": "motion_gotoxy",
+          "next": "icon_Hunger_show_294",
+          "parent": "icon_Hunger_recv_292",
+          "inputs": {
+            "X": [
+              1,
+              [
+                4,
+                "-180"
+              ]
+            ],
+            "Y": [
+              1,
+              [
+                4,
+                "140"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "icon_Hunger_show_294": {
+          "opcode": "looks_show",
+          "next": null,
+          "parent": "icon_Hunger_goto_293",
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "icon_Hunger_recv_go_295": {
+          "opcode": "event_whenbroadcastreceived",
+          "next": "icon_Hunger_hide_go_296",
+          "parent": null,
+          "inputs": {},
+          "fields": {
+            "BROADCAST_OPTION": [
+              "game_over",
+              "broadcast_game_over"
+            ]
+          },
+          "shadow": false,
+          "topLevel": true,
+          "x": 100,
+          "y": 400
+        },
+        "icon_Hunger_hide_go_296": {
+          "opcode": "looks_hide",
+          "next": null,
+          "parent": "icon_Hunger_recv_go_295",
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        }
+      },
+      "comments": {},
+      "currentCostume": 0,
+      "costumes": [
+        {
+          "assetId": "icon_hunger",
+          "name": "icon_hunger",
+          "md5ext": "icon_hunger.png",
+          "dataFormat": "png",
+          "rotationCenterX": 16,
+          "rotationCenterY": 16
+        }
+      ],
+      "sounds": [],
+      "volume": 100,
+      "layerOrder": 12,
+      "visible": false,
+      "x": -180,
+      "y": 140,
+      "size": 100,
+      "direction": 90,
+      "draggable": false,
+      "rotationStyle": "all around"
+    },
+    {
+      "isStage": false,
+      "name": "StatIcon_Happiness",
+      "variables": {},
+      "lists": {},
+      "broadcasts": {},
+      "blocks": {
+        "icon_Happiness_flag_297": {
+          "opcode": "event_whenflagclicked",
+          "next": "icon_Happiness_hide_298",
+          "parent": null,
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": true,
+          "x": 100,
+          "y": 100
+        },
+        "icon_Happiness_hide_298": {
+          "opcode": "looks_hide",
+          "next": null,
+          "parent": "icon_Happiness_flag_297",
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "icon_Happiness_recv_299": {
+          "opcode": "event_whenbroadcastreceived",
+          "next": "icon_Happiness_goto_300",
+          "parent": null,
+          "inputs": {},
+          "fields": {
+            "BROADCAST_OPTION": [
+              "start_game",
+              "broadcast_start_game"
+            ]
+          },
+          "shadow": false,
+          "topLevel": true,
+          "x": 100,
+          "y": 250
+        },
+        "icon_Happiness_goto_300": {
+          "opcode": "motion_gotoxy",
+          "next": "icon_Happiness_show_301",
+          "parent": "icon_Happiness_recv_299",
+          "inputs": {
+            "X": [
+              1,
+              [
+                4,
+                "-40"
+              ]
+            ],
+            "Y": [
+              1,
+              [
+                4,
+                "140"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "icon_Happiness_show_301": {
+          "opcode": "looks_show",
+          "next": null,
+          "parent": "icon_Happiness_goto_300",
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "icon_Happiness_recv_go_302": {
+          "opcode": "event_whenbroadcastreceived",
+          "next": "icon_Happiness_hide_go_303",
+          "parent": null,
+          "inputs": {},
+          "fields": {
+            "BROADCAST_OPTION": [
+              "game_over",
+              "broadcast_game_over"
+            ]
+          },
+          "shadow": false,
+          "topLevel": true,
+          "x": 100,
+          "y": 400
+        },
+        "icon_Happiness_hide_go_303": {
+          "opcode": "looks_hide",
+          "next": null,
+          "parent": "icon_Happiness_recv_go_302",
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        }
+      },
+      "comments": {},
+      "currentCostume": 0,
+      "costumes": [
+        {
+          "assetId": "icon_happiness",
+          "name": "icon_happiness",
+          "md5ext": "icon_happiness.png",
+          "dataFormat": "png",
+          "rotationCenterX": 16,
+          "rotationCenterY": 16
+        }
+      ],
+      "sounds": [],
+      "volume": 100,
+      "layerOrder": 13,
+      "visible": false,
+      "x": -40,
+      "y": 140,
+      "size": 100,
+      "direction": 90,
+      "draggable": false,
+      "rotationStyle": "all around"
+    },
+    {
+      "isStage": false,
+      "name": "StatIcon_Energy",
+      "variables": {},
+      "lists": {},
+      "broadcasts": {},
+      "blocks": {
+        "icon_Energy_flag_304": {
+          "opcode": "event_whenflagclicked",
+          "next": "icon_Energy_hide_305",
+          "parent": null,
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": true,
+          "x": 100,
+          "y": 100
+        },
+        "icon_Energy_hide_305": {
+          "opcode": "looks_hide",
+          "next": null,
+          "parent": "icon_Energy_flag_304",
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "icon_Energy_recv_306": {
+          "opcode": "event_whenbroadcastreceived",
+          "next": "icon_Energy_goto_307",
+          "parent": null,
+          "inputs": {},
+          "fields": {
+            "BROADCAST_OPTION": [
+              "start_game",
+              "broadcast_start_game"
+            ]
+          },
+          "shadow": false,
+          "topLevel": true,
+          "x": 100,
+          "y": 250
+        },
+        "icon_Energy_goto_307": {
+          "opcode": "motion_gotoxy",
+          "next": "icon_Energy_show_308",
+          "parent": "icon_Energy_recv_306",
+          "inputs": {
+            "X": [
+              1,
+              [
+                4,
+                "100"
+              ]
+            ],
+            "Y": [
+              1,
+              [
+                4,
+                "140"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "icon_Energy_show_308": {
+          "opcode": "looks_show",
+          "next": null,
+          "parent": "icon_Energy_goto_307",
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "icon_Energy_recv_go_309": {
+          "opcode": "event_whenbroadcastreceived",
+          "next": "icon_Energy_hide_go_310",
+          "parent": null,
+          "inputs": {},
+          "fields": {
+            "BROADCAST_OPTION": [
+              "game_over",
+              "broadcast_game_over"
+            ]
+          },
+          "shadow": false,
+          "topLevel": true,
+          "x": 100,
+          "y": 400
+        },
+        "icon_Energy_hide_go_310": {
+          "opcode": "looks_hide",
+          "next": null,
+          "parent": "icon_Energy_recv_go_309",
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        }
+      },
+      "comments": {},
+      "currentCostume": 0,
+      "costumes": [
+        {
+          "assetId": "icon_energy",
+          "name": "icon_energy",
+          "md5ext": "icon_energy.png",
+          "dataFormat": "png",
+          "rotationCenterX": 16,
+          "rotationCenterY": 16
+        }
+      ],
+      "sounds": [],
+      "volume": 100,
+      "layerOrder": 14,
+      "visible": false,
+      "x": 100,
+      "y": 140,
+      "size": 100,
+      "direction": 90,
+      "draggable": false,
+      "rotationStyle": "all around"
+    },
+    {
+      "isStage": false,
+      "name": "Props",
+      "variables": {},
+      "lists": {},
+      "broadcasts": {},
+      "blocks": {
+        "prop_flag_311": {
+          "opcode": "event_whenflagclicked",
+          "next": "prop_hide_312",
+          "parent": null,
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": true,
+          "x": 100,
+          "y": 50
+        },
+        "prop_hide_312": {
+          "opcode": "looks_hide",
+          "next": null,
+          "parent": "prop_flag_311",
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "prop_feed_313": {
+          "opcode": "event_whenbroadcastreceived",
+          "next": "prop_if_alien_314",
+          "parent": null,
+          "inputs": {},
+          "fields": {
+            "BROADCAST_OPTION": [
+              "feed",
+              "broadcast_feed"
+            ]
+          },
+          "shadow": false,
+          "topLevel": true,
+          "x": 100,
+          "y": 150
+        },
+        "prop_if_alien_314": {
+          "opcode": "control_if_else",
+          "next": "prop_feed_goto_321",
+          "parent": "prop_feed_313",
+          "inputs": {
+            "CONDITION": [
+              2,
+              "prop_eq_alien_315"
+            ],
+            "SUBSTACK": [
+              2,
+              "prop_set_alien_316"
+            ],
+            "SUBSTACK2": [
+              2,
+              "prop_if_puppy_317"
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "prop_eq_alien_315": {
+          "opcode": "operator_equals",
+          "next": null,
+          "parent": "prop_if_alien_314",
+          "inputs": {
+            "OPERAND1": [
+              3,
+              "prop_read_type1_326",
+              [
+                10,
+                ""
+              ]
+            ],
+            "OPERAND2": [
+              1,
+              [
+                10,
+                "Bloop"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "prop_read_type1_326": {
+          "opcode": "data_variable",
+          "next": null,
+          "parent": "prop_eq_alien_315",
+          "inputs": {},
+          "fields": {
+            "VARIABLE": [
+              "PetType",
+              "var_pettype"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "prop_set_alien_316": {
+          "opcode": "looks_switchcostumeto",
+          "next": null,
+          "parent": "prop_if_alien_314",
+          "inputs": {
+            "COSTUME": [
+              1,
+              [
+                10,
+                "prop_space_food"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "prop_if_puppy_317": {
+          "opcode": "control_if_else",
+          "next": null,
+          "parent": "prop_if_alien_314",
+          "inputs": {
+            "CONDITION": [
+              2,
+              "prop_eq_puppy_318"
+            ],
+            "SUBSTACK": [
+              2,
+              "prop_set_puppy_319"
+            ],
+            "SUBSTACK2": [
+              2,
+              "prop_set_kitten_320"
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "prop_eq_puppy_318": {
+          "opcode": "operator_equals",
+          "next": null,
+          "parent": "prop_if_puppy_317",
+          "inputs": {
+            "OPERAND1": [
+              3,
+              "prop_read_type2_327",
+              [
+                10,
+                ""
+              ]
+            ],
+            "OPERAND2": [
+              1,
+              [
+                10,
+                "Waffles"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "prop_read_type2_327": {
+          "opcode": "data_variable",
+          "next": null,
+          "parent": "prop_eq_puppy_318",
+          "inputs": {},
+          "fields": {
+            "VARIABLE": [
+              "PetType",
+              "var_pettype"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "prop_set_puppy_319": {
+          "opcode": "looks_switchcostumeto",
+          "next": null,
+          "parent": "prop_if_puppy_317",
+          "inputs": {
+            "COSTUME": [
+              1,
+              [
+                10,
+                "prop_bone"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "prop_set_kitten_320": {
+          "opcode": "looks_switchcostumeto",
+          "next": null,
+          "parent": "prop_if_puppy_317",
+          "inputs": {
+            "COSTUME": [
+              1,
+              [
+                10,
+                "prop_oil_can"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "prop_feed_goto_321": {
+          "opcode": "motion_gotoxy",
+          "next": "prop_feed_show_322",
+          "parent": "prop_if_alien_314",
+          "inputs": {
+            "X": [
+              1,
+              [
+                4,
+                "-120"
+              ]
+            ],
+            "Y": [
+              1,
+              [
+                4,
+                "-130"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "prop_feed_show_322": {
+          "opcode": "looks_show",
+          "next": "prop_feed_glide_323",
+          "parent": "prop_feed_goto_321",
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "prop_feed_glide_323": {
+          "opcode": "motion_glidesecstoxy",
+          "next": "prop_feed_hide_324",
+          "parent": "prop_feed_show_322",
+          "inputs": {
+            "SECS": [
+              1,
+              [
+                4,
+                "0.8"
+              ]
+            ],
+            "X": [
+              1,
+              [
+                4,
+                "0"
+              ]
+            ],
+            "Y": [
+              1,
+              [
+                4,
+                "-20"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "prop_feed_hide_324": {
+          "opcode": "looks_hide",
+          "next": "prop_feed_vfx_325",
+          "parent": "prop_feed_glide_323",
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "prop_feed_vfx_325": {
+          "opcode": "event_broadcast",
+          "next": null,
+          "parent": "prop_feed_hide_324",
+          "inputs": {
+            "BROADCAST_INPUT": [
+              1,
+              [
+                11,
+                "vfx_hearts",
+                "broadcast_vfx_hearts"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "prop_play_328": {
+          "opcode": "event_whenbroadcastreceived",
+          "next": "prop_play_set_329",
+          "parent": null,
+          "inputs": {},
+          "fields": {
+            "BROADCAST_OPTION": [
+              "play",
+              "broadcast_play"
+            ]
+          },
+          "shadow": false,
+          "topLevel": true,
+          "x": 450,
+          "y": 150
+        },
+        "prop_play_set_329": {
+          "opcode": "looks_switchcostumeto",
+          "next": "prop_play_goto_330",
+          "parent": "prop_play_328",
+          "inputs": {
+            "COSTUME": [
+              1,
+              [
+                10,
+                "prop_ball"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "prop_play_goto_330": {
+          "opcode": "motion_gotoxy",
+          "next": "prop_play_show_331",
+          "parent": "prop_play_set_329",
+          "inputs": {
+            "X": [
+              1,
+              [
+                4,
+                "0"
+              ]
+            ],
+            "Y": [
+              1,
+              [
+                4,
+                "-130"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "prop_play_show_331": {
+          "opcode": "looks_show",
+          "next": "prop_play_g1_332",
+          "parent": "prop_play_goto_330",
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "prop_play_g1_332": {
+          "opcode": "motion_glidesecstoxy",
+          "next": "prop_play_g2_333",
+          "parent": "prop_play_show_331",
+          "inputs": {
+            "SECS": [
+              1,
+              [
+                4,
+                "0.5"
+              ]
+            ],
+            "X": [
+              1,
+              [
+                4,
+                "-80"
+              ]
+            ],
+            "Y": [
+              1,
+              [
+                4,
+                "-20"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "prop_play_g2_333": {
+          "opcode": "motion_glidesecstoxy",
+          "next": "prop_play_g3_334",
+          "parent": "prop_play_g1_332",
+          "inputs": {
+            "SECS": [
+              1,
+              [
+                4,
+                "0.5"
+              ]
+            ],
+            "X": [
+              1,
+              [
+                4,
+                "80"
+              ]
+            ],
+            "Y": [
+              1,
+              [
+                4,
+                "-20"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "prop_play_g3_334": {
+          "opcode": "motion_glidesecstoxy",
+          "next": "prop_play_hide_335",
+          "parent": "prop_play_g2_333",
+          "inputs": {
+            "SECS": [
+              1,
+              [
+                4,
+                "0.5"
+              ]
+            ],
+            "X": [
+              1,
+              [
+                4,
+                "0"
+              ]
+            ],
+            "Y": [
+              1,
+              [
+                4,
+                "-20"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "prop_play_hide_335": {
+          "opcode": "looks_hide",
+          "next": "prop_play_vfx_336",
+          "parent": "prop_play_g3_334",
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "prop_play_vfx_336": {
+          "opcode": "event_broadcast",
+          "next": null,
+          "parent": "prop_play_hide_335",
+          "inputs": {
+            "BROADCAST_INPUT": [
+              1,
+              [
+                11,
+                "vfx_hearts",
+                "broadcast_vfx_hearts"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        }
+      },
+      "comments": {},
+      "currentCostume": 0,
+      "costumes": [
+        {
+          "assetId": "prop_space_food",
+          "name": "prop_space_food",
+          "md5ext": "prop_space_food.png",
+          "dataFormat": "png",
+          "rotationCenterX": 30,
+          "rotationCenterY": 30
+        },
+        {
+          "assetId": "prop_bone",
+          "name": "prop_bone",
+          "md5ext": "prop_bone.png",
+          "dataFormat": "png",
+          "rotationCenterX": 30,
+          "rotationCenterY": 30
+        },
+        {
+          "assetId": "prop_oil_can",
+          "name": "prop_oil_can",
+          "md5ext": "prop_oil_can.png",
+          "dataFormat": "png",
+          "rotationCenterX": 30,
+          "rotationCenterY": 30
+        },
+        {
+          "assetId": "prop_ball",
+          "name": "prop_ball",
+          "md5ext": "prop_ball.png",
+          "dataFormat": "png",
+          "rotationCenterX": 30,
+          "rotationCenterY": 30
+        }
+      ],
+      "sounds": [],
+      "volume": 100,
+      "layerOrder": 15,
+      "visible": false,
+      "x": 0,
+      "y": 0,
+      "size": 100,
+      "direction": 90,
+      "draggable": false,
+      "rotationStyle": "all around"
+    },
+    {
+      "isStage": false,
+      "name": "VFX",
+      "variables": {
+        "var_vfx_type": [
+          "VfxType",
+          ""
+        ]
+      },
+      "lists": {},
+      "broadcasts": {},
+      "blocks": {
+        "vfx_flag_337": {
+          "opcode": "event_whenflagclicked",
+          "next": "vfx_hide_338",
+          "parent": null,
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": true,
+          "x": 100,
+          "y": 50
+        },
+        "vfx_hide_338": {
+          "opcode": "looks_hide",
+          "next": null,
+          "parent": "vfx_flag_337",
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "vfx_h_recv_339": {
+          "opcode": "event_whenbroadcastreceived",
+          "next": "vfx_h_set_340",
+          "parent": null,
+          "inputs": {},
+          "fields": {
+            "BROADCAST_OPTION": [
+              "vfx_hearts",
+              "broadcast_vfx_hearts"
+            ]
+          },
+          "shadow": false,
+          "topLevel": true,
+          "x": 100,
+          "y": 150
+        },
+        "vfx_h_set_340": {
+          "opcode": "data_setvariableto",
+          "next": "vfx_h_clone_341",
+          "parent": "vfx_h_recv_339",
+          "inputs": {
+            "VALUE": [
+              1,
+              [
+                10,
+                "hearts"
+              ]
+            ]
+          },
+          "fields": {
+            "VARIABLE": [
+              "VfxType",
+              "var_vfx_type"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "vfx_h_clone_341": {
+          "opcode": "control_create_clone_of",
+          "next": null,
+          "parent": "vfx_h_set_340",
+          "inputs": {
+            "CLONE_OPTION": [
+              1,
+              [
+                10,
+                "_myself_"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "clone_start_342": {
+          "opcode": "control_start_as_clone",
+          "next": "clone_if_hearts_343",
+          "parent": null,
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": true,
+          "x": 400,
+          "y": 50
+        },
+        "clone_if_hearts_343": {
+          "opcode": "control_if",
+          "next": null,
+          "parent": "clone_start_342",
+          "inputs": {
+            "CONDITION": [
+              2,
+              "clone_eq_hearts_344"
+            ],
+            "SUBSTACK": [
+              2,
+              "clone_hearts_logic_345"
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "clone_eq_hearts_344": {
+          "opcode": "operator_equals",
+          "next": null,
+          "parent": "clone_if_hearts_343",
+          "inputs": {
+            "OPERAND1": [
+              3,
+              "clone_read_type_346",
+              [
+                10,
+                ""
+              ]
+            ],
+            "OPERAND2": [
+              1,
+              [
+                10,
+                "hearts"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "clone_read_type_346": {
+          "opcode": "data_variable",
+          "next": null,
+          "parent": "clone_eq_hearts_344",
+          "inputs": {},
+          "fields": {
+            "VARIABLE": [
+              "VfxType",
+              "var_vfx_type"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "clone_hearts_logic_345": "h_switch_347",
+        "h_switch_347": {
+          "opcode": "looks_switchcostumeto",
+          "next": "h_goto_348",
+          "parent": "clone_if_hearts_343",
+          "inputs": {
+            "COSTUME": [
+              1,
+              [
+                10,
+                "vfx_hearts"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "h_goto_348": {
+          "opcode": "motion_gotoxy",
+          "next": "h_show_349",
+          "parent": "h_switch_347",
+          "inputs": {
+            "X": [
+              1,
+              [
+                4,
+                "0"
+              ]
+            ],
+            "Y": [
+              1,
+              [
+                4,
+                "-20"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "h_show_349": {
+          "opcode": "looks_show",
+          "next": "h_rep_350",
+          "parent": "h_goto_348",
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "h_rep_350": {
+          "opcode": "control_repeat",
+          "next": "h_del_351",
+          "parent": "h_show_349",
+          "inputs": {
+            "TIMES": [
+              1,
+              [
+                6,
+                "10"
+              ]
+            ],
+            "SUBSTACK": [
+              2,
+              "h_up_352"
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "h_up_352": {
+          "opcode": "motion_changeyby",
+          "next": "h_ghost_353",
+          "parent": "h_rep_350",
+          "inputs": {
+            "DY": [
+              1,
+              [
+                4,
+                "8"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "h_ghost_353": {
+          "opcode": "looks_changeeffectby",
+          "next": "h_wait_354",
+          "parent": "h_up_352",
+          "inputs": {
+            "CHANGE": [
+              1,
+              [
+                4,
+                "10"
+              ]
+            ]
+          },
+          "fields": {
+            "EFFECT": [
+              "GHOST"
+            ]
+          },
+          "shadow": false,
+          "topLevel": false
+        },
+        "h_wait_354": {
+          "opcode": "control_wait",
+          "next": null,
+          "parent": "h_ghost_353",
+          "inputs": {
+            "DURATION": [
+              1,
+              [
+                5,
+                "0.05"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "h_del_351": {
+          "opcode": "control_delete_this_clone",
+          "next": null,
+          "parent": "h_rep_350",
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        }
+      },
+      "comments": {},
+      "currentCostume": 0,
+      "costumes": [
+        {
+          "assetId": "vfx_hearts",
+          "name": "vfx_hearts",
+          "md5ext": "vfx_hearts.png",
+          "dataFormat": "png",
+          "rotationCenterX": 20,
+          "rotationCenterY": 20
+        },
+        {
+          "assetId": "vfx_zzz",
+          "name": "vfx_zzz",
+          "md5ext": "vfx_zzz.png",
+          "dataFormat": "png",
+          "rotationCenterX": 20,
+          "rotationCenterY": 20
+        },
+        {
+          "assetId": "vfx_alert",
+          "name": "vfx_alert",
+          "md5ext": "vfx_alert.png",
+          "dataFormat": "png",
+          "rotationCenterX": 20,
+          "rotationCenterY": 20
+        }
+      ],
+      "sounds": [],
+      "volume": 100,
+      "layerOrder": 20,
+      "visible": false,
+      "x": 0,
+      "y": 0,
+      "size": 100,
+      "direction": 90,
+      "draggable": false,
+      "rotationStyle": "all around"
+    }
+  ],
+  "monitors": [],
+  "extensions": [],
+  "meta": {
+    "semver": "3.0.0",
+    "vm": "0.2.0",
+    "agent": "Mozilla/5.0"
+  }
+}
